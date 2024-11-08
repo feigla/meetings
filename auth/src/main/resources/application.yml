@@ -1,0 +1,17 @@
+server:
+  port: 81
+spring:
+  application:
+    name: auth-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/auth_database
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+token:
+  signing:
+    key: fbc4aa66aa8d546264212214d53849a5146bca5d3952f51b0cccb810a87ec300bd4c611288a51e289fc837e63b28550153580394b3aec01bcf23cda28fe78fa92bcf33a0eb10181b2f8abc1925aa41867beedb724b8db6dea3bf9bf0623039d603fff9fc36eb035739aa8b3d402cfb21f4b986a5f0a23e17bd3f2e01c1ff4a7111e8ef4d3bb606218605be518969cd02210578b825300523c65ec6f09e6d16aa6ad01f6f873d365d9095b93da7266b85bffd27a3f1a1e69e185924bdf462b43d456589019b0c17f48e71f7d9bd540cd33cdb8f72ab039faf07a01d42f272dbaa3249cced5849c080fecf701dc6434812d6716efad2447c7afeff78849b541d12
+  expiration: 2678400000

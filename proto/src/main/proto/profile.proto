@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+option java_package = "ru.bogdsvn.grcp.profile";
+
+message Profile {
+  string userId = 1;
+}
+
+message Preference {
+  string gender = 1;
+  int32 ageLowerBound = 2;
+  int32 ageUpperBound = 3;
+}
+
+message Bio {
+  string name = 1;
+  int32 age = 2;
+  string gender = 3;
+  string description = 4;
+}
+
+service ProfileService {
+  rpc getPreference(Profile) returns (Preference) {};
+  rpc getBio(Profile) returns (Bio) {};
+}

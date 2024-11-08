@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option java_package = "ru.bogdsvn.grcp.proximity";
+
+message ProfileList {
+  message Profile {
+    string userId = 1;
+  }
+  repeated Profile profile = 1;
+}
+
+service ProximityService {
+  rpc getNearbyProfiles(ProfileList.Profile) returns(ProfileList) {
+
+  }
+}

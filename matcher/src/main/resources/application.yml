@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: matcher-service
+server:
+  port: 8081

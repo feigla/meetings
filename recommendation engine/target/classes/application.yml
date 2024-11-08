@@ -1,0 +1,19 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: recommendation-service
+
+grpc:
+  client:
+    location-service:
+      address: 'static://127.0.0.1:9898'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
+    profile-service:
+      address: 'static://127.0.0.1:9899'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
+

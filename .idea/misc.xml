@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/../compability-app/common-proto/pom.xml" />
+        <option value="$PROJECT_DIR$/../compability-app/profile-service/pom.xml" />
+        <option value="$PROJECT_DIR$/../compability-app/matcher/pom.xml" />
+        <option value="$PROJECT_DIR$/common-proto/pom.xml" />
+        <option value="$PROJECT_DIR$/matcher/pom.xml" />
+        <option value="$PROJECT_DIR$/profile-service/pom.xml" />
+        <option value="$PROJECT_DIR$/proto/pom.xml" />
+        <option value="$PROJECT_DIR$/gateway-api/pom.xml" />
+        <option value="$PROJECT_DIR$/auth-service/pom.xml" />
+        <option value="$PROJECT_DIR$/common-cors/pom.xml" />
+        <option value="$PROJECT_DIR$/recommendation/pom.xml" />
+        <option value="$PROJECT_DIR$/profile/pom.xml" />
+        <option value="$PROJECT_DIR$/auth/pom.xml" />
+        <option value="$PROJECT_DIR$/location/pom.xml" />
+        <option value="$PROJECT_DIR$/recommendation engine/pom.xml" />
+      </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/common-cors/pom.xml" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_22" default="true" project-jdk-name="22" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>
