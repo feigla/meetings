@@ -12,6 +12,7 @@ import ru.bogdsvn.location.store.entities.ProfileEntity;
 import ru.bogdsvn.location.store.repositories.ProfileRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -22,7 +23,7 @@ public class GrpcProximityServerService extends ProximityServiceGrpc.ProximitySe
 
     @Override
     public void getNearbyProfiles(Proximity.ProfileList.Profile request, StreamObserver<Proximity.ProfileList> responseObserver) {
-        ProfileEntity entity = profileRepository.findById(request.getUserId());
+        ProfileEntity entity = profileRepository.findById(request.getUserId()).get();
 
         S2CellId cellId = new S2CellId(entity.getLocation().getId());
         S2LatLng latLng = cellId.toLatLng();
