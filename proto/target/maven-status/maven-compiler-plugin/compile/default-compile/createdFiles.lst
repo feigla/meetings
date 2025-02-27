@@ -1,4 +1,5 @@
 ru/bogdsvn/grcp/profile/ProfileOuterClass$Bio$1.class
+ru/bogdsvn/grcp/profile/ProfileOuterClass$Response$1.class
 ru/bogdsvn/grcp/proximity/Proximity$ProfileList.class
 ru/bogdsvn/grcp/profile/ProfileOuterClass$Preference$1.class
 ru/bogdsvn/grcp/profile/ProfileServiceGrpc$MethodHandlers.class
@@ -32,14 +33,17 @@ ru/bogdsvn/grcp/profile/ProfileServiceGrpc$ProfileServiceImplBase.class
 ru/bogdsvn/grcp/profile/ProfileServiceGrpc$2.class
 ru/bogdsvn/grcp/proximity/Proximity$ProfileList$Profile.class
 ru/bogdsvn/grcp/proximity/ProximityServiceGrpc$ProximityServiceImplBase.class
+ru/bogdsvn/grcp/profile/ProfileOuterClass$ResponseOrBuilder.class
 ru/bogdsvn/grcp/proximity/Proximity$ProfileList$Builder.class
 ru/bogdsvn/grcp/profile/ProfileOuterClass$Bio$Builder.class
+ru/bogdsvn/grcp/profile/ProfileOuterClass$Response$Builder.class
 ru/bogdsvn/grcp/profile/ProfileServiceGrpc$ProfileServiceStub.class
 ru/bogdsvn/grcp/proximity/ProximityServiceGrpc$ProximityServiceBlockingStub.class
 ru/bogdsvn/grcp/profile/ProfileOuterClass$Preference$Builder.class
 ru/bogdsvn/grcp/proximity/Proximity.class
 ru/bogdsvn/grcp/proximity/ProximityServiceGrpc$ProximityServiceMethodDescriptorSupplier.class
 ru/bogdsvn/grcp/profile/ProfileOuterClass$Profile$Builder.class
+ru/bogdsvn/grcp/profile/ProfileOuterClass$Response.class
 ru/bogdsvn/grcp/profile/ProfileOuterClass$PreferenceOrBuilder.class
 ru/bogdsvn/grcp/proximity/ProximityServiceGrpc.class
 ru/bogdsvn/grcp/proximity/ProximityServiceGrpc$3.class

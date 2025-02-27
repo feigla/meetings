@@ -2183,6 +2183,483 @@ public final class ProfileOuterClass {
 
   }
 
+  public interface ResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:Response)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>bool ok = 1;</code>
+     * @return The ok.
+     */
+    boolean getOk();
+  }
+  /**
+   * Protobuf type {@code Response}
+   */
+  public static final class Response extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:Response)
+      ResponseOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use Response.newBuilder() to construct.
+    private Response(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private Response() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new Response();
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return ru.bogdsvn.grcp.profile.ProfileOuterClass.internal_static_Response_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return ru.bogdsvn.grcp.profile.ProfileOuterClass.internal_static_Response_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              ru.bogdsvn.grcp.profile.ProfileOuterClass.Response.class, ru.bogdsvn.grcp.profile.ProfileOuterClass.Response.Builder.class);
+    }
+
+    public static final int OK_FIELD_NUMBER = 1;
+    private boolean ok_ = false;
+    /**
+     * <code>bool ok = 1;</code>
+     * @return The ok.
+     */
+    @java.lang.Override
+    public boolean getOk() {
+      return ok_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (ok_ != false) {
+        output.writeBool(1, ok_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (ok_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(1, ok_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof ru.bogdsvn.grcp.profile.ProfileOuterClass.Response)) {
+        return super.equals(obj);
+      }
+      ru.bogdsvn.grcp.profile.ProfileOuterClass.Response other = (ru.bogdsvn.grcp.profile.ProfileOuterClass.Response) obj;
+
+      if (getOk()
+          != other.getOk()) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + OK_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getOk());
+      hash = (29 * hash) + getUnknownFields().hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static ru.bogdsvn.grcp.profile.ProfileOuterClass.Response parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static ru.bogdsvn.grcp.profile.ProfileOuterClass.Response parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static ru.bogdsvn.grcp.profile.ProfileOuterClass.Response parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static ru.bogdsvn.grcp.profile.ProfileOuterClass.Response parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static ru.bogdsvn.grcp.profile.ProfileOuterClass.Response parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static ru.bogdsvn.grcp.profile.ProfileOuterClass.Response parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static ru.bogdsvn.grcp.profile.ProfileOuterClass.Response parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static ru.bogdsvn.grcp.profile.ProfileOuterClass.Response parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static ru.bogdsvn.grcp.profile.ProfileOuterClass.Response parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static ru.bogdsvn.grcp.profile.ProfileOuterClass.Response parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static ru.bogdsvn.grcp.profile.ProfileOuterClass.Response parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static ru.bogdsvn.grcp.profile.ProfileOuterClass.Response parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(ru.bogdsvn.grcp.profile.ProfileOuterClass.Response prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code Response}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:Response)
+        ru.bogdsvn.grcp.profile.ProfileOuterClass.ResponseOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return ru.bogdsvn.grcp.profile.ProfileOuterClass.internal_static_Response_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return ru.bogdsvn.grcp.profile.ProfileOuterClass.internal_static_Response_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                ru.bogdsvn.grcp.profile.ProfileOuterClass.Response.class, ru.bogdsvn.grcp.profile.ProfileOuterClass.Response.Builder.class);
+      }
+
+      // Construct using ru.bogdsvn.grcp.profile.ProfileOuterClass.Response.newBuilder()
+      private Builder() {
+
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        bitField0_ = 0;
+        ok_ = false;
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return ru.bogdsvn.grcp.profile.ProfileOuterClass.internal_static_Response_descriptor;
+      }
+
+      @java.lang.Override
+      public ru.bogdsvn.grcp.profile.ProfileOuterClass.Response getDefaultInstanceForType() {
+        return ru.bogdsvn.grcp.profile.ProfileOuterClass.Response.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public ru.bogdsvn.grcp.profile.ProfileOuterClass.Response build() {
+        ru.bogdsvn.grcp.profile.ProfileOuterClass.Response result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public ru.bogdsvn.grcp.profile.ProfileOuterClass.Response buildPartial() {
+        ru.bogdsvn.grcp.profile.ProfileOuterClass.Response result = new ru.bogdsvn.grcp.profile.ProfileOuterClass.Response(this);
+        if (bitField0_ != 0) { buildPartial0(result); }
+        onBuilt();
+        return result;
+      }
+
+      private void buildPartial0(ru.bogdsvn.grcp.profile.ProfileOuterClass.Response result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.ok_ = ok_;
+        }
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof ru.bogdsvn.grcp.profile.ProfileOuterClass.Response) {
+          return mergeFrom((ru.bogdsvn.grcp.profile.ProfileOuterClass.Response)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(ru.bogdsvn.grcp.profile.ProfileOuterClass.Response other) {
+        if (other == ru.bogdsvn.grcp.profile.ProfileOuterClass.Response.getDefaultInstance()) return this;
+        if (other.getOk() != false) {
+          setOk(other.getOk());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 8: {
+                ok_ = input.readBool();
+                bitField0_ |= 0x00000001;
+                break;
+              } // case 8
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.unwrapIOException();
+        } finally {
+          onChanged();
+        } // finally
+        return this;
+      }
+      private int bitField0_;
+
+      private boolean ok_ ;
+      /**
+       * <code>bool ok = 1;</code>
+       * @return The ok.
+       */
+      @java.lang.Override
+      public boolean getOk() {
+        return ok_;
+      }
+      /**
+       * <code>bool ok = 1;</code>
+       * @param value The ok to set.
+       * @return This builder for chaining.
+       */
+      public Builder setOk(boolean value) {
+
+        ok_ = value;
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool ok = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearOk() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        ok_ = false;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:Response)
+    }
+
+    // @@protoc_insertion_point(class_scope:Response)
+    private static final ru.bogdsvn.grcp.profile.ProfileOuterClass.Response DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new ru.bogdsvn.grcp.profile.ProfileOuterClass.Response();
+    }
+
+    public static ru.bogdsvn.grcp.profile.ProfileOuterClass.Response getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Response>
+        PARSER = new com.google.protobuf.AbstractParser<Response>() {
+      @java.lang.Override
+      public Response parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
+      }
+    };
+
+    public static com.google.protobuf.Parser<Response> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Response> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public ru.bogdsvn.grcp.profile.ProfileOuterClass.Response getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_Profile_descriptor;
   private static final 
@@ -2198,6 +2675,11 @@ public final class ProfileOuterClass {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_Bio_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_Response_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_Response_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -2211,10 +2693,12 @@ public final class ProfileOuterClass {
       "(\t\"J\n\nPreference\022\016\n\006gender\030\001 \001(\t\022\025\n\rageL" +
       "owerBound\030\002 \001(\005\022\025\n\rageUpperBound\030\003 \001(\005\"E" +
       "\n\003Bio\022\014\n\004name\030\001 \001(\t\022\013\n\003age\030\002 \001(\005\022\016\n\006gend" +
-      "er\030\003 \001(\t\022\023\n\013description\030\004 \001(\t2V\n\016Profile" +
-      "Service\022(\n\rgetPreference\022\010.Profile\032\013.Pre" +
-      "ference\"\000\022\032\n\006getBio\022\010.Profile\032\004.Bio\"\000B\031\n" +
-      "\027ru.bogdsvn.grcp.profileb\006proto3"
+      "er\030\003 \001(\t\022\023\n\013description\030\004 \001(\t\"\026\n\010Respons" +
+      "e\022\n\n\002ok\030\001 \001(\0102|\n\016ProfileService\022(\n\rgetPr" +
+      "eference\022\010.Profile\032\013.Preference\"\000\022\032\n\006get" +
+      "Bio\022\010.Profile\032\004.Bio\"\000\022$\n\013saveProfile\022\010.P" +
+      "rofile\032\t.Response\"\000B\031\n\027ru.bogdsvn.grcp.p" +
+      "rofileb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -2238,6 +2722,12 @@ public final class ProfileOuterClass {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Bio_descriptor,
         new java.lang.String[] { "Name", "Age", "Gender", "Description", });
+    internal_static_Response_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_Response_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_Response_descriptor,
+        new java.lang.String[] { "Ok", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

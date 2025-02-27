@@ -77,6 +77,37 @@ public final class ProfileServiceGrpc {
     return getGetBioMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<ru.bogdsvn.grcp.profile.ProfileOuterClass.Profile,
+      ru.bogdsvn.grcp.profile.ProfileOuterClass.Response> getSaveProfileMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "saveProfile",
+      requestType = ru.bogdsvn.grcp.profile.ProfileOuterClass.Profile.class,
+      responseType = ru.bogdsvn.grcp.profile.ProfileOuterClass.Response.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<ru.bogdsvn.grcp.profile.ProfileOuterClass.Profile,
+      ru.bogdsvn.grcp.profile.ProfileOuterClass.Response> getSaveProfileMethod() {
+    io.grpc.MethodDescriptor<ru.bogdsvn.grcp.profile.ProfileOuterClass.Profile, ru.bogdsvn.grcp.profile.ProfileOuterClass.Response> getSaveProfileMethod;
+    if ((getSaveProfileMethod = ProfileServiceGrpc.getSaveProfileMethod) == null) {
+      synchronized (ProfileServiceGrpc.class) {
+        if ((getSaveProfileMethod = ProfileServiceGrpc.getSaveProfileMethod) == null) {
+          ProfileServiceGrpc.getSaveProfileMethod = getSaveProfileMethod =
+              io.grpc.MethodDescriptor.<ru.bogdsvn.grcp.profile.ProfileOuterClass.Profile, ru.bogdsvn.grcp.profile.ProfileOuterClass.Response>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "saveProfile"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  ru.bogdsvn.grcp.profile.ProfileOuterClass.Profile.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  ru.bogdsvn.grcp.profile.ProfileOuterClass.Response.getDefaultInstance()))
+              .setSchemaDescriptor(new ProfileServiceMethodDescriptorSupplier("saveProfile"))
+              .build();
+        }
+      }
+    }
+    return getSaveProfileMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -138,6 +169,13 @@ public final class ProfileServiceGrpc {
         io.grpc.stub.StreamObserver<ru.bogdsvn.grcp.profile.ProfileOuterClass.Bio> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetBioMethod(), responseObserver);
     }
+
+    /**
+     */
+    default void saveProfile(ru.bogdsvn.grcp.profile.ProfileOuterClass.Profile request,
+        io.grpc.stub.StreamObserver<ru.bogdsvn.grcp.profile.ProfileOuterClass.Response> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSaveProfileMethod(), responseObserver);
+    }
   }
 
   /**
@@ -182,6 +220,14 @@ public final class ProfileServiceGrpc {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getGetBioMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void saveProfile(ru.bogdsvn.grcp.profile.ProfileOuterClass.Profile request,
+        io.grpc.stub.StreamObserver<ru.bogdsvn.grcp.profile.ProfileOuterClass.Response> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getSaveProfileMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -212,6 +258,13 @@ public final class ProfileServiceGrpc {
     public ru.bogdsvn.grcp.profile.ProfileOuterClass.Bio getBio(ru.bogdsvn.grcp.profile.ProfileOuterClass.Profile request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getGetBioMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public ru.bogdsvn.grcp.profile.ProfileOuterClass.Response saveProfile(ru.bogdsvn.grcp.profile.ProfileOuterClass.Profile request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getSaveProfileMethod(), getCallOptions(), request);
     }
   }
 
@@ -246,10 +299,19 @@ public final class ProfileServiceGrpc {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getGetBioMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<ru.bogdsvn.grcp.profile.ProfileOuterClass.Response> saveProfile(
+        ru.bogdsvn.grcp.profile.ProfileOuterClass.Profile request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getSaveProfileMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_GET_PREFERENCE = 0;
   private static final int METHODID_GET_BIO = 1;
+  private static final int METHODID_SAVE_PROFILE = 2;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -275,6 +337,10 @@ public final class ProfileServiceGrpc {
         case METHODID_GET_BIO:
           serviceImpl.getBio((ru.bogdsvn.grcp.profile.ProfileOuterClass.Profile) request,
               (io.grpc.stub.StreamObserver<ru.bogdsvn.grcp.profile.ProfileOuterClass.Bio>) responseObserver);
+          break;
+        case METHODID_SAVE_PROFILE:
+          serviceImpl.saveProfile((ru.bogdsvn.grcp.profile.ProfileOuterClass.Profile) request,
+              (io.grpc.stub.StreamObserver<ru.bogdsvn.grcp.profile.ProfileOuterClass.Response>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -308,6 +374,13 @@ public final class ProfileServiceGrpc {
               ru.bogdsvn.grcp.profile.ProfileOuterClass.Profile,
               ru.bogdsvn.grcp.profile.ProfileOuterClass.Bio>(
                 service, METHODID_GET_BIO)))
+        .addMethod(
+          getSaveProfileMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              ru.bogdsvn.grcp.profile.ProfileOuterClass.Profile,
+              ru.bogdsvn.grcp.profile.ProfileOuterClass.Response>(
+                service, METHODID_SAVE_PROFILE)))
         .build();
   }
 
@@ -358,6 +431,7 @@ public final class ProfileServiceGrpc {
               .setSchemaDescriptor(new ProfileServiceFileDescriptorSupplier())
               .addMethod(getGetPreferenceMethod())
               .addMethod(getGetBioMethod())
+              .addMethod(getSaveProfileMethod())
               .build();
         }
       }
