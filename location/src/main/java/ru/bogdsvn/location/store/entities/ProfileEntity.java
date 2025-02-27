@@ -1,6 +1,5 @@
 package ru.bogdsvn.location.store.entities;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,8 +12,10 @@ import lombok.*;
 @Table(name = "profiles")
 public class ProfileEntity {
     @Id
+    @Column(name = "user_id")
     private String userId;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "location_id")
     private LocationEntity location;
 }

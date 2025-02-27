@@ -13,6 +13,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = "profiles")
 @Entity
 @Table(name = "locations")
 public class LocationEntity {
@@ -20,8 +21,7 @@ public class LocationEntity {
     private Long id;
 
     @Builder.Default
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "location_id", referencedColumnName = "id")
+    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ProfileEntity> profiles = new ArrayList<>();
 
     public void addProfile(ProfileEntity profile) {
