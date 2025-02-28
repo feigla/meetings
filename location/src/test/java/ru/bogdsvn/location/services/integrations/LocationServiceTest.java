@@ -52,7 +52,7 @@ public class LocationServiceTest {
         for (int i = 0; i < 1000; i++) {
             profiles.add(
                     ProfileEntity.builder()
-                            .userId(String.valueOf(i))
+                            .userId((long)i)
                             .location(location)
                             .build()
             );
