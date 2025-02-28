@@ -76,10 +76,10 @@ public class LocationService {
                 if (!batchLoadLocations(begin.id(), end.id(), profiles)) {
                     break;
                 }
-            } else {
+            } else if (cellId.level() == LEVEL) {
                 LocationEntity location = locationRepository.findById(cellId.id()).orElse(null);
-                if (location != null) {
-                    if (!batchLoadProfiles(location.getId(), profiles));
+                if (location != null && !batchLoadProfiles(location.getId(), profiles)) {
+                    break;
                 }
             }
         }
