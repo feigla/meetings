@@ -4,6 +4,7 @@ import com.google.common.geometry.S2CellId;
 import com.google.common.geometry.S2LatLng;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.junit.jupiter.api.AfterEach;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -43,8 +44,6 @@ public class LocationService {
                             .id(cellId)
                             .build()
             );
-        } else if (locationEntity.getId() == cellId) {
-            return;
         }
 
         ProfileEntity profileEntity = profileRepository.findById(userId).orElse(null);
@@ -54,11 +53,11 @@ public class LocationService {
                     .builder()
                     .userId(userId)
                     .build();
-        } else {
-            locationEntity.removeProfile(profileEntity);
+        } else if (profileEntity.getLocation().getId() == cellId) {
+            return;
         }
 
-        locationEntity.addProfile(profileEntity);
+        profileEntity.setLocation(locationEntity);
     }
 
     @Transactional

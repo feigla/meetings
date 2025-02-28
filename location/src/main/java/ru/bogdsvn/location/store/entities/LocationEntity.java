@@ -23,12 +23,4 @@ public class LocationEntity {
     @Builder.Default
     @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ProfileEntity> profiles = new ArrayList<>();
-
-    public void addProfile(ProfileEntity profile) {
-        profiles.add(profile);
-    }
-
-    public void removeProfile(ProfileEntity profile) {
-        profiles.remove(profile);
-    }
 }
