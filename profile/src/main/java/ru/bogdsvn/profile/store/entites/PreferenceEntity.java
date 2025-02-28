@@ -13,7 +13,7 @@ import ru.bogdsvn.profile.utils.Gender;
 @Table(name = "preferences")
 public class PreferenceEntity {
     @Id
-    private String id;
+    private Long id;
 
     private Integer ageLowerBound;
 

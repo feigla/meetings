@@ -20,16 +20,10 @@ public final class ProfileOuterClass {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>string userId = 1;</code>
+     * <code>int64 userId = 1;</code>
      * @return The userId.
      */
-    java.lang.String getUserId();
-    /**
-     * <code>string userId = 1;</code>
-     * @return The bytes for userId.
-     */
-    com.google.protobuf.ByteString
-        getUserIdBytes();
+    long getUserId();
   }
   /**
    * Protobuf type {@code Profile}
@@ -44,7 +38,6 @@ public final class ProfileOuterClass {
       super(builder);
     }
     private Profile() {
-      userId_ = "";
     }
 
     @java.lang.Override
@@ -68,42 +61,14 @@ public final class ProfileOuterClass {
     }
 
     public static final int USERID_FIELD_NUMBER = 1;
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object userId_ = "";
+    private long userId_ = 0L;
     /**
-     * <code>string userId = 1;</code>
+     * <code>int64 userId = 1;</code>
      * @return The userId.
      */
     @java.lang.Override
-    public java.lang.String getUserId() {
-      java.lang.Object ref = userId_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        userId_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string userId = 1;</code>
-     * @return The bytes for userId.
-     */
-    @java.lang.Override
-    public com.google.protobuf.ByteString
-        getUserIdBytes() {
-      java.lang.Object ref = userId_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        userId_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public long getUserId() {
+      return userId_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -120,8 +85,8 @@ public final class ProfileOuterClass {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(userId_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, userId_);
+      if (userId_ != 0L) {
+        output.writeInt64(1, userId_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -132,8 +97,9 @@ public final class ProfileOuterClass {
       if (size != -1) return size;
 
       size = 0;
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(userId_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, userId_);
+      if (userId_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, userId_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
@@ -150,8 +116,8 @@ public final class ProfileOuterClass {
       }
       ru.bogdsvn.grcp.profile.ProfileOuterClass.Profile other = (ru.bogdsvn.grcp.profile.ProfileOuterClass.Profile) obj;
 
-      if (!getUserId()
-          .equals(other.getUserId())) return false;
+      if (getUserId()
+          != other.getUserId()) return false;
       if (!getUnknownFields().equals(other.getUnknownFields())) return false;
       return true;
     }
@@ -164,7 +130,8 @@ public final class ProfileOuterClass {
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + USERID_FIELD_NUMBER;
-      hash = (53 * hash) + getUserId().hashCode();
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getUserId());
       hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -296,7 +263,7 @@ public final class ProfileOuterClass {
       public Builder clear() {
         super.clear();
         bitField0_ = 0;
-        userId_ = "";
+        userId_ = 0L;
         return this;
       }
 
@@ -379,10 +346,8 @@ public final class ProfileOuterClass {
 
       public Builder mergeFrom(ru.bogdsvn.grcp.profile.ProfileOuterClass.Profile other) {
         if (other == ru.bogdsvn.grcp.profile.ProfileOuterClass.Profile.getDefaultInstance()) return this;
-        if (!other.getUserId().isEmpty()) {
-          userId_ = other.userId_;
-          bitField0_ |= 0x00000001;
-          onChanged();
+        if (other.getUserId() != 0L) {
+          setUserId(other.getUserId());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
@@ -410,11 +375,11 @@ public final class ProfileOuterClass {
               case 0:
                 done = true;
                 break;
-              case 10: {
-                userId_ = input.readStringRequireUtf8();
+              case 8: {
+                userId_ = input.readInt64();
                 bitField0_ |= 0x00000001;
                 break;
-              } // case 10
+              } // case 8
               default: {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                   done = true; // was an endgroup tag
@@ -432,74 +397,34 @@ public final class ProfileOuterClass {
       }
       private int bitField0_;
 
-      private java.lang.Object userId_ = "";
+      private long userId_ ;
       /**
-       * <code>string userId = 1;</code>
+       * <code>int64 userId = 1;</code>
        * @return The userId.
        */
-      public java.lang.String getUserId() {
-        java.lang.Object ref = userId_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          userId_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      @java.lang.Override
+      public long getUserId() {
+        return userId_;
       }
       /**
-       * <code>string userId = 1;</code>
-       * @return The bytes for userId.
-       */
-      public com.google.protobuf.ByteString
-          getUserIdBytes() {
-        java.lang.Object ref = userId_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          userId_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string userId = 1;</code>
+       * <code>int64 userId = 1;</code>
        * @param value The userId to set.
        * @return This builder for chaining.
        */
-      public Builder setUserId(
-          java.lang.String value) {
-        if (value == null) { throw new NullPointerException(); }
+      public Builder setUserId(long value) {
+
         userId_ = value;
         bitField0_ |= 0x00000001;
         onChanged();
         return this;
       }
       /**
-       * <code>string userId = 1;</code>
+       * <code>int64 userId = 1;</code>
        * @return This builder for chaining.
        */
       public Builder clearUserId() {
-        userId_ = getDefaultInstance().getUserId();
         bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string userId = 1;</code>
-       * @param value The bytes for userId to set.
-       * @return This builder for chaining.
-       */
-      public Builder setUserIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) { throw new NullPointerException(); }
-        checkByteStringIsUtf8(value);
-        userId_ = value;
-        bitField0_ |= 0x00000001;
+        userId_ = 0L;
         onChanged();
         return this;
       }
@@ -2690,7 +2615,7 @@ public final class ProfileOuterClass {
   static {
     java.lang.String[] descriptorData = {
       "\n\rprofile.proto\"\031\n\007Profile\022\016\n\006userId\030\001 \001" +
-      "(\t\"J\n\nPreference\022\016\n\006gender\030\001 \001(\t\022\025\n\rageL" +
+      "(\003\"J\n\nPreference\022\016\n\006gender\030\001 \001(\t\022\025\n\rageL" +
       "owerBound\030\002 \001(\005\022\025\n\rageUpperBound\030\003 \001(\005\"E" +
       "\n\003Bio\022\014\n\004name\030\001 \001(\t\022\013\n\003age\030\002 \001(\005\022\016\n\006gend" +
       "er\030\003 \001(\t\022\023\n\013description\030\004 \001(\t\"\026\n\010Respons" +

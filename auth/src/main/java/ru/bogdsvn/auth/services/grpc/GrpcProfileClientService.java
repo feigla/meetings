@@ -13,7 +13,7 @@ public class GrpcProfileClientService extends ProfileServiceGrpc.ProfileServiceI
     @GrpcClient("profile-service")
     private ProfileServiceGrpc.ProfileServiceBlockingStub blockingStub;
 
-    public void saveProfile(String userId) {
+    public void saveProfile(long userId) {
         ProfileOuterClass.Response response = blockingStub.saveProfile(ProfileOuterClass.Profile.newBuilder().setUserId(userId).build());
         if (!response.getOk()) {
             throw new RuntimeException("Exception with save profile");

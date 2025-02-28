@@ -13,7 +13,7 @@ import ru.bogdsvn.profile.utils.Gender;
 @Table(name = "bios")
 public class BioEntity {
     @Id
-    private String id;
+    private Long id;
 
     private String name;
 

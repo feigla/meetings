@@ -40,7 +40,7 @@ public class GrpcProximityServerService extends ProximityServiceGrpc.ProximitySe
                                                 .setUserId(e.getUserId())
                                                 .build()
                                 ).filter((Proximity.ProfileList.Profile p) ->
-                                        !p.getUserId().equals(request.getUserId())
+                                        (long)p.getUserId() != (long)request.getUserId()
                                 ).collect(Collectors.toList())
                 )
                 .build();

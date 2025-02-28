@@ -9,5 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface PreferenceRepository extends JpaRepository<PreferenceEntity, Long> {
-    Optional<PreferenceEntity> findById(String id);
+    Optional<PreferenceEntity> findById(Long id);
 }

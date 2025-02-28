@@ -18,6 +18,6 @@ public class PreferenceController {
     @PostMapping(FILL_PREFERENCE)
     public PreferenceDto fillPreference(@RequestBody PreferenceDto preference,
                                         @RequestHeader("loggedId") String id) {
-        return preferenceService.fillPreference(preference, id);
+        return preferenceService.fillPreference(preference, Long.valueOf(id));
     }
 }

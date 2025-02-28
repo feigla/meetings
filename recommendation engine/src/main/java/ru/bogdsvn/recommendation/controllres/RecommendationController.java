@@ -20,6 +20,6 @@ public class RecommendationController {
 
     @GetMapping(GET_RECOMMENDATION)
     public List<BioDto> getRecommendation(@RequestHeader("loggedId") String id) {
-        return recommendationService.getRecommendation(id);
+        return recommendationService.getRecommendation(Long.parseLong(id));
     }
 }

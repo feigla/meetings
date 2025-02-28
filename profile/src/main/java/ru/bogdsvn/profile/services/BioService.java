@@ -20,7 +20,7 @@ public class BioService {
     private final BioRepository bioRepository;
 
     @Transactional
-    public BioDto fillBio(BioDto bioDto, String id) {
+    public BioDto fillBio(BioDto bioDto, Long id) {
         ProfileEntity profileEntity = profileRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("Username not found"));
 
         BioEntity bioEntity =  BioEntity

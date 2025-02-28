@@ -21,8 +21,8 @@ public class UserService {
         if (userRepository.existsByUsername(user.getUsername())) {
             throw new UsernameExistException("Username already exists");
         }
-        UserEntity entity = userRepository.save(user);
-        grpcProfileClientService.saveProfile(String.valueOf(entity.getId()));
+        userRepository.save(user);
+        grpcProfileClientService.saveProfile(user.getId());
     }
 
     public UserEntity getUserByUsername(String username) {

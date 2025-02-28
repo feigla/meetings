@@ -9,5 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface BioRepository extends JpaRepository<BioEntity, Long> {
-    Optional<BioEntity> findById(String id);
+    Optional<BioEntity> findById(Long id);
 }

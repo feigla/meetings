@@ -32,14 +32,12 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
                 throw new UnauthorizedException("Jwt is invalid");
             }
 
-            String id = jwtService.extractId(token);
-
-            log.info(id);
+            long id = jwtService.extractId(token);
 
             var request = exchange
                     .getRequest()
                     .mutate()
-                    .header("loggedId", id)
+                    .header("loggedId", String.valueOf(id))
                     .build();
 
             return chain.filter(exchange.mutate().request(request).build());

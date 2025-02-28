@@ -23,7 +23,7 @@ public class RecommendationService {
     private final GrpcProximityClientService grpcProximityClientService;
     private final GrpcProfileClientService grpcProfileClientService;
 
-    public List<BioDto> getRecommendation(String id) {
+    public List<BioDto> getRecommendation(long id) {
         nearbyProfiles = new ArrayList<>(50);
         userPreference = new PreferenceDto();
 

@@ -20,7 +20,7 @@ public class GrpcProximityClientService extends ProximityServiceGrpc.ProximitySe
     @GrpcClient("location-service")
     private ProximityServiceGrpc.ProximityServiceBlockingStub blockingStub;
 
-    public List<ProfileDto> getNearbyProfiles(final String id) {
+    public List<ProfileDto> getNearbyProfiles(final long id) {
         try {
             final Proximity.ProfileList response = blockingStub.getNearbyProfiles(Proximity.ProfileList.Profile.newBuilder().setUserId(id).build());
             return response

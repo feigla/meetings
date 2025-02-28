@@ -19,10 +19,5 @@ public interface ProfileRepository extends JpaRepository<ProfileEntity, Long> {
     """)
     List<ProfileEntity> findProfilesById(@Param("cell_id") Long cellId, Pageable pageable);
 
-    @Query("""
-        SELECT profile
-        FROM ProfileEntity profile
-        WHERE profile.userId = :id
-    """)
-    Optional<ProfileEntity> findById(@Param("id") String id);
+    Optional<ProfileEntity> findById(Long id);
 }

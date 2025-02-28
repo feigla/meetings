@@ -13,7 +13,7 @@ import lombok.*;
 public class ProfileEntity {
     @Id
     @Column(name = "user_id")
-    private String userId;
+    private Long userId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id")

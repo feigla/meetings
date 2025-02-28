@@ -31,7 +31,7 @@ public class LocationService {
     private final S2Service s2Service;
 
     @Transactional
-    public void saveLocation(LocationDto locationDto, String userId) {
+    public void saveLocation(LocationDto locationDto, long userId) {
         long cellId = s2Service.getCellId(locationDto.getLatitude(), locationDto.getLongitude(), LEVEL);
 
         LocationEntity locationEntity = locationRepository.findById(cellId).orElse(null);

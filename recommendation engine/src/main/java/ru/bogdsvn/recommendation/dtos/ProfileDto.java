@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class ProfileDto {
-    private String id;
+    private Long id;
 }

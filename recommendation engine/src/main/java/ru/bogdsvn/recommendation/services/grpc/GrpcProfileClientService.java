@@ -17,7 +17,7 @@ public class GrpcProfileClientService extends ProfileServiceGrpc.ProfileServiceI
     @GrpcClient("profile-service")
     private ProfileServiceGrpc.ProfileServiceBlockingStub blockingStub;
 
-    public PreferenceDto getPreference(final String id) {
+    public PreferenceDto getPreference(final long id) {
         try {
             final ProfileOuterClass.Preference preference = blockingStub.getPreference(ProfileOuterClass.Profile.newBuilder().setUserId(id).build());
             return PreferenceDto.builder()
@@ -31,7 +31,7 @@ public class GrpcProfileClientService extends ProfileServiceGrpc.ProfileServiceI
         throw new RuntimeException("Not found");
     }
 
-    public BioDto getBio(final String id) {
+    public BioDto getBio(final long id) {
         try {
 
             final ProfileOuterClass.Bio bio = blockingStub.getBio(ProfileOuterClass.Profile.newBuilder().setUserId(id).build());

@@ -18,6 +18,6 @@ public class BioController {
     @PostMapping(FILL_BIO)
     public BioDto fillBio(@RequestBody BioDto bio,
                           @RequestHeader("loggedId") String id) {
-        return bioService.fillBio(bio, id);
+        return bioService.fillBio(bio, Long.valueOf(id));
     }
 }

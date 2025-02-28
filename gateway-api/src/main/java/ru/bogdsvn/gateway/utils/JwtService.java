@@ -91,8 +91,8 @@ public class JwtService {
      * @param token токен
      * @return id
      */
-    public String extractId(String token) {
-        return extractClaim(token, Claims::getId);
+    public Long extractId(String token) {
+        return Long.valueOf(extractClaim(token, Claims::getId));
     }
 
 

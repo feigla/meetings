@@ -22,7 +22,7 @@ public class PreferenceService {
     private final PreferenceRepository preferenceRepository;
 
     @Transactional
-    public PreferenceDto fillPreference(PreferenceDto preferenceDto, String id) {
+    public PreferenceDto fillPreference(PreferenceDto preferenceDto, Long id) {
         ProfileEntity profile = profileRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("Username not found"));
 
         PreferenceEntity preferenceEntity = preferenceRepository.findById(id).orElse(
