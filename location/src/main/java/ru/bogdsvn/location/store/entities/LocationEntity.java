@@ -15,7 +15,6 @@ import org.springframework.data.domain.Persistable;
 @Table(name = "locations")
 public class LocationEntity implements Persistable<Long> {
     @Id
-    @Column(name = "user_id")
     private Long id;
 
     @Builder.Default

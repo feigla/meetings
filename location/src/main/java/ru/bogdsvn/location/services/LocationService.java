@@ -9,8 +9,12 @@ import org.locationtech.jts.geom.PrecisionModel;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bogdsvn.location.dtos.LocationDto;
+import ru.bogdsvn.location.dtos.UserDto;
 import ru.bogdsvn.location.store.entities.LocationEntity;
 import ru.bogdsvn.location.store.repositories.LocationRepository;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Log4j2
 @RequiredArgsConstructor
@@ -34,5 +38,13 @@ public class LocationService {
         } else {
             location.setPoint(p);
         }
+    }
+
+    public List<UserDto> getNearbyUsers(long userId) {
+        LocationEntity location = locationRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        return locationRepository.findNearbyUsers(location.getPoint(), userId)
+                .stream()
+                .map(x -> UserDto.builder().id(x.getId()).build())
+                .collect(Collectors.toList());
     }
 }

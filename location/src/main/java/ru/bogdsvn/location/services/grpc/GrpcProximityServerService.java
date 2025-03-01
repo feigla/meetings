@@ -14,5 +14,6 @@ public class GrpcProximityServerService extends ProximityServiceGrpc.ProximitySe
 
     @Override
     public void getNearbyProfiles(Proximity.ProfileList.Profile request, StreamObserver<Proximity.ProfileList> responseObserver) {
+
     }
 }
