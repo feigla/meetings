@@ -2,10 +2,8 @@ package ru.bogdsvn.location.store.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.geo.Point;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.locationtech.jts.geom.Point;
+import org.springframework.data.domain.Persistable;
 
 
 @Builder
@@ -13,18 +11,22 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = "profiles")
 @Entity
 @Table(name = "locations")
-public class LocationEntity {
+public class LocationEntity implements Persistable<Long> {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
+
+    @Builder.Default
+    @Transient
+    private boolean isNew = true;
 
     @Column(columnDefinition = "geometry(Point,4326)", nullable = false)
     private Point point;
 
-    @Builder.Default
-    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<ProfileEntity> profiles = new ArrayList<>();
+    @Override
+    public boolean isNew() {
+        return isNew;
+    }
 }
