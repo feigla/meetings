@@ -2,7 +2,7 @@ package ru.bogdsvn.location.store.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.BatchSize;
+import org.springframework.data.geo.Point;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,11 @@ import java.util.List;
 @Table(name = "locations")
 public class LocationEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(columnDefinition = "geometry(Point,4326)", nullable = false)
+    private Point point;
 
     @Builder.Default
     @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
