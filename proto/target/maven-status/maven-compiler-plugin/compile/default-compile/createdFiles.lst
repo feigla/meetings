@@ -1,9 +1,11 @@
 ru/bogdsvn/grcp/profile/ProfileOuterClass$Bio$1.class
 ru/bogdsvn/grcp/profile/ProfileOuterClass$Response$1.class
 ru/bogdsvn/grcp/proximity/Proximity$ProfileList.class
+ru/bogdsvn/grcp/proximity/Proximity$ProfileRequestOrBuilder.class
 ru/bogdsvn/grcp/profile/ProfileOuterClass$Preference$1.class
 ru/bogdsvn/grcp/profile/ProfileServiceGrpc$MethodHandlers.class
 ru/bogdsvn/grcp/profile/ProfileOuterClass$Profile$1.class
+ru/bogdsvn/grcp/proximity/Proximity$ProfileRequest$1.class
 ru/bogdsvn/grcp/profile/ProfileOuterClass$Bio.class
 ru/bogdsvn/grcp/proximity/Proximity$ProfileList$1.class
 ru/bogdsvn/grcp/profile/ProfileServiceGrpc.class
@@ -11,6 +13,7 @@ ru/bogdsvn/grcp/profile/ProfileServiceGrpc$ProfileServiceBlockingStub.class
 ru/bogdsvn/grcp/profile/ProfileOuterClass$Profile.class
 ru/bogdsvn/grcp/profile/ProfileOuterClass$BioOrBuilder.class
 ru/bogdsvn/grcp/proximity/ProximityServiceGrpc$2.class
+ru/bogdsvn/grcp/proximity/Proximity$ProfileRequest$Builder.class
 ru/bogdsvn/grcp/profile/ProfileOuterClass.class
 ru/bogdsvn/grcp/profile/ProfileServiceGrpc$1.class
 ru/bogdsvn/grcp/profile/ProfileServiceGrpc$ProfileServiceMethodDescriptorSupplier.class
@@ -27,6 +30,7 @@ ru/bogdsvn/grcp/proximity/ProximityServiceGrpc$ProximityServiceFutureStub.class
 ru/bogdsvn/grcp/profile/ProfileServiceGrpc$ProfileServiceFileDescriptorSupplier.class
 ru/bogdsvn/grcp/proximity/ProximityServiceGrpc$ProximityServiceFileDescriptorSupplier.class
 ru/bogdsvn/grcp/profile/ProfileServiceGrpc$ProfileServiceBaseDescriptorSupplier.class
+ru/bogdsvn/grcp/proximity/Proximity$ProfileRequest.class
 ru/bogdsvn/grcp/proximity/ProximityServiceGrpc$MethodHandlers.class
 ru/bogdsvn/grcp/proximity/ProximityServiceGrpc$1.class
 ru/bogdsvn/grcp/profile/ProfileServiceGrpc$ProfileServiceImplBase.class

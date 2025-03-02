@@ -18,13 +18,17 @@ public class GrpcProximityServerService extends ProximityServiceGrpc.ProximitySe
     private final LocationService locationService;
 
     @Override
-    public void getNearbyProfiles(Proximity.ProfileList.Profile request, StreamObserver<Proximity.ProfileList> responseObserver) {
+    public void getNearbyProfiles(Proximity.ProfileRequest request, StreamObserver<Proximity.ProfileList> responseObserver) {
         List<UserDto> users = locationService.getNearbyUsers(request.getUserId());
 
         Proximity.ProfileList.Builder builder = Proximity.ProfileList.newBuilder();
 
         for (UserDto user : users) {
-            builder.addProfile(Proximity.ProfileList.Profile.newBuilder().setUserId(user.getId()).build());
+            builder.addProfile(Proximity.ProfileList.Profile
+                    .newBuilder()
+                    .setUserId(user.getId())
+                    .setDist(user.getDist())
+                    .build());
         }
 
         responseObserver.onNext(builder.build());

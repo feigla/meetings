@@ -22,7 +22,7 @@ public class GrpcProximityClientService extends ProximityServiceGrpc.ProximitySe
 
     public List<ProfileDto> getNearbyProfiles(final long id) {
         try {
-            final Proximity.ProfileList response = blockingStub.getNearbyProfiles(Proximity.ProfileList.Profile.newBuilder().setUserId(id).build());
+            final Proximity.ProfileList response = blockingStub.getNearbyProfiles(Proximity.ProfileRequest.newBuilder().setUserId(id).build());
             return response
                     .getProfileList()
                     .stream()

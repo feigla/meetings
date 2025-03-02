@@ -15,27 +15,27 @@ public final class ProximityServiceGrpc {
   public static final java.lang.String SERVICE_NAME = "ProximityService";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<ru.bogdsvn.grcp.proximity.Proximity.ProfileList.Profile,
+  private static volatile io.grpc.MethodDescriptor<ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest,
       ru.bogdsvn.grcp.proximity.Proximity.ProfileList> getGetNearbyProfilesMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "getNearbyProfiles",
-      requestType = ru.bogdsvn.grcp.proximity.Proximity.ProfileList.Profile.class,
+      requestType = ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest.class,
       responseType = ru.bogdsvn.grcp.proximity.Proximity.ProfileList.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<ru.bogdsvn.grcp.proximity.Proximity.ProfileList.Profile,
+  public static io.grpc.MethodDescriptor<ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest,
       ru.bogdsvn.grcp.proximity.Proximity.ProfileList> getGetNearbyProfilesMethod() {
-    io.grpc.MethodDescriptor<ru.bogdsvn.grcp.proximity.Proximity.ProfileList.Profile, ru.bogdsvn.grcp.proximity.Proximity.ProfileList> getGetNearbyProfilesMethod;
+    io.grpc.MethodDescriptor<ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest, ru.bogdsvn.grcp.proximity.Proximity.ProfileList> getGetNearbyProfilesMethod;
     if ((getGetNearbyProfilesMethod = ProximityServiceGrpc.getGetNearbyProfilesMethod) == null) {
       synchronized (ProximityServiceGrpc.class) {
         if ((getGetNearbyProfilesMethod = ProximityServiceGrpc.getGetNearbyProfilesMethod) == null) {
           ProximityServiceGrpc.getGetNearbyProfilesMethod = getGetNearbyProfilesMethod =
-              io.grpc.MethodDescriptor.<ru.bogdsvn.grcp.proximity.Proximity.ProfileList.Profile, ru.bogdsvn.grcp.proximity.Proximity.ProfileList>newBuilder()
+              io.grpc.MethodDescriptor.<ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest, ru.bogdsvn.grcp.proximity.Proximity.ProfileList>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "getNearbyProfiles"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  ru.bogdsvn.grcp.proximity.Proximity.ProfileList.Profile.getDefaultInstance()))
+                  ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   ru.bogdsvn.grcp.proximity.Proximity.ProfileList.getDefaultInstance()))
               .setSchemaDescriptor(new ProximityServiceMethodDescriptorSupplier("getNearbyProfiles"))
@@ -96,7 +96,7 @@ public final class ProximityServiceGrpc {
 
     /**
      */
-    default void getNearbyProfiles(ru.bogdsvn.grcp.proximity.Proximity.ProfileList.Profile request,
+    default void getNearbyProfiles(ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest request,
         io.grpc.stub.StreamObserver<ru.bogdsvn.grcp.proximity.Proximity.ProfileList> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetNearbyProfilesMethod(), responseObserver);
     }
@@ -131,7 +131,7 @@ public final class ProximityServiceGrpc {
 
     /**
      */
-    public void getNearbyProfiles(ru.bogdsvn.grcp.proximity.Proximity.ProfileList.Profile request,
+    public void getNearbyProfiles(ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest request,
         io.grpc.stub.StreamObserver<ru.bogdsvn.grcp.proximity.Proximity.ProfileList> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getGetNearbyProfilesMethod(), getCallOptions()), request, responseObserver);
@@ -156,7 +156,7 @@ public final class ProximityServiceGrpc {
 
     /**
      */
-    public ru.bogdsvn.grcp.proximity.Proximity.ProfileList getNearbyProfiles(ru.bogdsvn.grcp.proximity.Proximity.ProfileList.Profile request) {
+    public ru.bogdsvn.grcp.proximity.Proximity.ProfileList getNearbyProfiles(ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getGetNearbyProfilesMethod(), getCallOptions(), request);
     }
@@ -181,7 +181,7 @@ public final class ProximityServiceGrpc {
     /**
      */
     public com.google.common.util.concurrent.ListenableFuture<ru.bogdsvn.grcp.proximity.Proximity.ProfileList> getNearbyProfiles(
-        ru.bogdsvn.grcp.proximity.Proximity.ProfileList.Profile request) {
+        ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getGetNearbyProfilesMethod(), getCallOptions()), request);
     }
@@ -207,7 +207,7 @@ public final class ProximityServiceGrpc {
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
         case METHODID_GET_NEARBY_PROFILES:
-          serviceImpl.getNearbyProfiles((ru.bogdsvn.grcp.proximity.Proximity.ProfileList.Profile) request,
+          serviceImpl.getNearbyProfiles((ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest) request,
               (io.grpc.stub.StreamObserver<ru.bogdsvn.grcp.proximity.Proximity.ProfileList>) responseObserver);
           break;
         default:
@@ -232,7 +232,7 @@ public final class ProximityServiceGrpc {
           getGetNearbyProfilesMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
             new MethodHandlers<
-              ru.bogdsvn.grcp.proximity.Proximity.ProfileList.Profile,
+              ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest,
               ru.bogdsvn.grcp.proximity.Proximity.ProfileList>(
                 service, METHODID_GET_NEARBY_PROFILES)))
         .build();

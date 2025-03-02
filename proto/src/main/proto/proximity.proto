@@ -2,15 +2,20 @@ syntax = "proto3";
 
 option java_package = "ru.bogdsvn.grcp.proximity";
 
+message ProfileRequest {
+  int64 userId = 1;
+}
+
 message ProfileList {
   message Profile {
     int64 userId = 1;
+    double dist = 2;
   }
   repeated Profile profile = 1;
 }
 
 service ProximityService {
-  rpc getNearbyProfiles(ProfileList.Profile) returns(ProfileList) {
+  rpc getNearbyProfiles(ProfileRequest) returns(ProfileList) {
 
   }
 }

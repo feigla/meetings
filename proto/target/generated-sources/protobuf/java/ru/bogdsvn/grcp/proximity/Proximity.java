@@ -15,6 +15,483 @@ public final class Proximity {
     registerAllExtensions(
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
+  public interface ProfileRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:ProfileRequest)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int64 userId = 1;</code>
+     * @return The userId.
+     */
+    long getUserId();
+  }
+  /**
+   * Protobuf type {@code ProfileRequest}
+   */
+  public static final class ProfileRequest extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:ProfileRequest)
+      ProfileRequestOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ProfileRequest.newBuilder() to construct.
+    private ProfileRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ProfileRequest() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ProfileRequest();
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return ru.bogdsvn.grcp.proximity.Proximity.internal_static_ProfileRequest_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return ru.bogdsvn.grcp.proximity.Proximity.internal_static_ProfileRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest.class, ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest.Builder.class);
+    }
+
+    public static final int USERID_FIELD_NUMBER = 1;
+    private long userId_ = 0L;
+    /**
+     * <code>int64 userId = 1;</code>
+     * @return The userId.
+     */
+    @java.lang.Override
+    public long getUserId() {
+      return userId_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (userId_ != 0L) {
+        output.writeInt64(1, userId_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (userId_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, userId_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest)) {
+        return super.equals(obj);
+      }
+      ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest other = (ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest) obj;
+
+      if (getUserId()
+          != other.getUserId()) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + USERID_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getUserId());
+      hash = (29 * hash) + getUnknownFields().hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code ProfileRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:ProfileRequest)
+        ru.bogdsvn.grcp.proximity.Proximity.ProfileRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return ru.bogdsvn.grcp.proximity.Proximity.internal_static_ProfileRequest_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return ru.bogdsvn.grcp.proximity.Proximity.internal_static_ProfileRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest.class, ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest.Builder.class);
+      }
+
+      // Construct using ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest.newBuilder()
+      private Builder() {
+
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        bitField0_ = 0;
+        userId_ = 0L;
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return ru.bogdsvn.grcp.proximity.Proximity.internal_static_ProfileRequest_descriptor;
+      }
+
+      @java.lang.Override
+      public ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest getDefaultInstanceForType() {
+        return ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest build() {
+        ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest buildPartial() {
+        ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest result = new ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest(this);
+        if (bitField0_ != 0) { buildPartial0(result); }
+        onBuilt();
+        return result;
+      }
+
+      private void buildPartial0(ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.userId_ = userId_;
+        }
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest) {
+          return mergeFrom((ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest other) {
+        if (other == ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest.getDefaultInstance()) return this;
+        if (other.getUserId() != 0L) {
+          setUserId(other.getUserId());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 8: {
+                userId_ = input.readInt64();
+                bitField0_ |= 0x00000001;
+                break;
+              } // case 8
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.unwrapIOException();
+        } finally {
+          onChanged();
+        } // finally
+        return this;
+      }
+      private int bitField0_;
+
+      private long userId_ ;
+      /**
+       * <code>int64 userId = 1;</code>
+       * @return The userId.
+       */
+      @java.lang.Override
+      public long getUserId() {
+        return userId_;
+      }
+      /**
+       * <code>int64 userId = 1;</code>
+       * @param value The userId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUserId(long value) {
+
+        userId_ = value;
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 userId = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearUserId() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        userId_ = 0L;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:ProfileRequest)
+    }
+
+    // @@protoc_insertion_point(class_scope:ProfileRequest)
+    private static final ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest();
+    }
+
+    public static ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ProfileRequest>
+        PARSER = new com.google.protobuf.AbstractParser<ProfileRequest>() {
+      @java.lang.Override
+      public ProfileRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
+      }
+    };
+
+    public static com.google.protobuf.Parser<ProfileRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ProfileRequest> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public ru.bogdsvn.grcp.proximity.Proximity.ProfileRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   public interface ProfileListOrBuilder extends
       // @@protoc_insertion_point(interface_extends:ProfileList)
       com.google.protobuf.MessageOrBuilder {
@@ -88,6 +565,12 @@ public final class Proximity {
        * @return The userId.
        */
       long getUserId();
+
+      /**
+       * <code>double dist = 2;</code>
+       * @return The dist.
+       */
+      double getDist();
     }
     /**
      * Protobuf type {@code ProfileList.Profile}
@@ -135,6 +618,17 @@ public final class Proximity {
         return userId_;
       }
 
+      public static final int DIST_FIELD_NUMBER = 2;
+      private double dist_ = 0D;
+      /**
+       * <code>double dist = 2;</code>
+       * @return The dist.
+       */
+      @java.lang.Override
+      public double getDist() {
+        return dist_;
+      }
+
       private byte memoizedIsInitialized = -1;
       @java.lang.Override
       public final boolean isInitialized() {
@@ -152,6 +646,9 @@ public final class Proximity {
         if (userId_ != 0L) {
           output.writeInt64(1, userId_);
         }
+        if (java.lang.Double.doubleToRawLongBits(dist_) != 0) {
+          output.writeDouble(2, dist_);
+        }
         getUnknownFields().writeTo(output);
       }
 
@@ -164,6 +661,10 @@ public final class Proximity {
         if (userId_ != 0L) {
           size += com.google.protobuf.CodedOutputStream
             .computeInt64Size(1, userId_);
+        }
+        if (java.lang.Double.doubleToRawLongBits(dist_) != 0) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeDoubleSize(2, dist_);
         }
         size += getUnknownFields().getSerializedSize();
         memoizedSize = size;
@@ -182,6 +683,9 @@ public final class Proximity {
 
         if (getUserId()
             != other.getUserId()) return false;
+        if (java.lang.Double.doubleToLongBits(getDist())
+            != java.lang.Double.doubleToLongBits(
+                other.getDist())) return false;
         if (!getUnknownFields().equals(other.getUnknownFields())) return false;
         return true;
       }
@@ -196,6 +700,9 @@ public final class Proximity {
         hash = (37 * hash) + USERID_FIELD_NUMBER;
         hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
             getUserId());
+        hash = (37 * hash) + DIST_FIELD_NUMBER;
+        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+            java.lang.Double.doubleToLongBits(getDist()));
         hash = (29 * hash) + getUnknownFields().hashCode();
         memoizedHashCode = hash;
         return hash;
@@ -328,6 +835,7 @@ public final class Proximity {
           super.clear();
           bitField0_ = 0;
           userId_ = 0L;
+          dist_ = 0D;
           return this;
         }
 
@@ -363,6 +871,9 @@ public final class Proximity {
           int from_bitField0_ = bitField0_;
           if (((from_bitField0_ & 0x00000001) != 0)) {
             result.userId_ = userId_;
+          }
+          if (((from_bitField0_ & 0x00000002) != 0)) {
+            result.dist_ = dist_;
           }
         }
 
@@ -413,6 +924,9 @@ public final class Proximity {
           if (other.getUserId() != 0L) {
             setUserId(other.getUserId());
           }
+          if (other.getDist() != 0D) {
+            setDist(other.getDist());
+          }
           this.mergeUnknownFields(other.getUnknownFields());
           onChanged();
           return this;
@@ -444,6 +958,11 @@ public final class Proximity {
                   bitField0_ |= 0x00000001;
                   break;
                 } // case 8
+                case 17: {
+                  dist_ = input.readDouble();
+                  bitField0_ |= 0x00000002;
+                  break;
+                } // case 17
                 default: {
                   if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                     done = true; // was an endgroup tag
@@ -489,6 +1008,38 @@ public final class Proximity {
         public Builder clearUserId() {
           bitField0_ = (bitField0_ & ~0x00000001);
           userId_ = 0L;
+          onChanged();
+          return this;
+        }
+
+        private double dist_ ;
+        /**
+         * <code>double dist = 2;</code>
+         * @return The dist.
+         */
+        @java.lang.Override
+        public double getDist() {
+          return dist_;
+        }
+        /**
+         * <code>double dist = 2;</code>
+         * @param value The dist to set.
+         * @return This builder for chaining.
+         */
+        public Builder setDist(double value) {
+
+          dist_ = value;
+          bitField0_ |= 0x00000002;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>double dist = 2;</code>
+         * @return This builder for chaining.
+         */
+        public Builder clearDist() {
+          bitField0_ = (bitField0_ & ~0x00000002);
+          dist_ = 0D;
           onChanged();
           return this;
         }
@@ -1275,6 +1826,11 @@ public final class Proximity {
   }
 
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_ProfileRequest_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_ProfileRequest_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_ProfileList_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -1293,19 +1849,26 @@ public final class Proximity {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\017proximity.proto\"O\n\013ProfileList\022%\n\007prof" +
-      "ile\030\001 \003(\0132\024.ProfileList.Profile\032\031\n\007Profi" +
-      "le\022\016\n\006userId\030\001 \001(\0032M\n\020ProximityService\0229" +
-      "\n\021getNearbyProfiles\022\024.ProfileList.Profil" +
-      "e\032\014.ProfileList\"\000B\033\n\031ru.bogdsvn.grcp.pro" +
-      "ximityb\006proto3"
+      "\n\017proximity.proto\" \n\016ProfileRequest\022\016\n\006u" +
+      "serId\030\001 \001(\003\"]\n\013ProfileList\022%\n\007profile\030\001 " +
+      "\003(\0132\024.ProfileList.Profile\032\'\n\007Profile\022\016\n\006" +
+      "userId\030\001 \001(\003\022\014\n\004dist\030\002 \001(\0012H\n\020ProximityS" +
+      "ervice\0224\n\021getNearbyProfiles\022\017.ProfileReq" +
+      "uest\032\014.ProfileList\"\000B\033\n\031ru.bogdsvn.grcp." +
+      "proximityb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         });
-    internal_static_ProfileList_descriptor =
+    internal_static_ProfileRequest_descriptor =
       getDescriptor().getMessageTypes().get(0);
+    internal_static_ProfileRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_ProfileRequest_descriptor,
+        new java.lang.String[] { "UserId", });
+    internal_static_ProfileList_descriptor =
+      getDescriptor().getMessageTypes().get(1);
     internal_static_ProfileList_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ProfileList_descriptor,
@@ -1315,7 +1878,7 @@ public final class Proximity {
     internal_static_ProfileList_Profile_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ProfileList_Profile_descriptor,
-        new java.lang.String[] { "UserId", });
+        new java.lang.String[] { "UserId", "Dist", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
