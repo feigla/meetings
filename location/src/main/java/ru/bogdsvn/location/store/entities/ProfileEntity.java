@@ -12,9 +12,10 @@ import org.springframework.data.domain.Persistable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "locations")
-public class LocationEntity implements Persistable<Long> {
+@Table(name = "profiles")
+public class ProfileEntity implements Persistable<Long> {
     @Id
+    @Column(name = "profile_id")
     private Long id;
 
     @Builder.Default

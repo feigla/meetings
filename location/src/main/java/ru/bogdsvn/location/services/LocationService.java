@@ -10,8 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bogdsvn.location.dtos.LocationDto;
 import ru.bogdsvn.location.dtos.UserDto;
-import ru.bogdsvn.location.store.entities.LocationEntity;
-import ru.bogdsvn.location.store.repositories.LocationRepository;
+import ru.bogdsvn.location.store.entities.ProfileEntity;
+import ru.bogdsvn.location.store.repositories.ProfileRepository;
+
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class LocationService {
-    private final LocationRepository locationRepository;
+    private final ProfileRepository profileRepository;
 
     private final GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), 4326);
 
@@ -28,21 +29,21 @@ public class LocationService {
     public void saveLocation(LocationDto locationDto, long userId) {
         Point p = geometryFactory.createPoint(new Coordinate(locationDto.getLongitude(), locationDto.getLatitude()));
 
-        LocationEntity location = locationRepository.findById(userId).orElse(null);
+        ProfileEntity profile = profileRepository.findById(userId).orElse(null);
 
-        if (location == null) {
-            locationRepository.save(LocationEntity.builder()
+        if (profile == null) {
+            profileRepository.save(ProfileEntity.builder()
                     .id(userId)
                     .point(p)
                     .build());
         } else {
-            location.setPoint(p);
+            profile.setPoint(p);
         }
     }
 
     public List<UserDto> getNearbyUsers(long userId) {
-        LocationEntity location = locationRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        return locationRepository.findNearbyUsers(location.getPoint(), userId)
+        ProfileEntity location = profileRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        return profileRepository.findNearbyUsers(location.getPoint(), userId)
                 .stream()
                 .map(x -> UserDto.builder().id(x.getId()).build())
                 .collect(Collectors.toList());

@@ -10,7 +10,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.bogdsvn.location.dtos.LocationDto;
 import ru.bogdsvn.location.dtos.UserDto;
 import ru.bogdsvn.location.services.LocationService;
-import ru.bogdsvn.location.store.repositories.LocationRepository;
+import ru.bogdsvn.location.store.repositories.ProfileRepository;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class LocationServiceTest {
     private LocationService locationService;
 
     @Autowired
-    private LocationRepository locationRepository;
+    private ProfileRepository profileRepository;
 
     @Test
     public void givenLocationDtoAndUserId_shouldCorrectSaveLocation() {
@@ -34,7 +34,7 @@ public class LocationServiceTest {
                         .build(),
                 2L
         );
-        Assertions.assertFalse(locationRepository.findById(2L).isEmpty());
+        Assertions.assertFalse(profileRepository.findById(2L).isEmpty());
     }
 
     @Test
