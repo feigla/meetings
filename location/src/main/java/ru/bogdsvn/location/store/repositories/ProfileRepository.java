@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import ru.bogdsvn.location.projections.ProfileProjection;
 import ru.bogdsvn.location.store.entities.ProfileEntity;
 
 import java.util.List;
@@ -12,13 +13,14 @@ import java.util.List;
 
 @Repository
 public interface ProfileRepository extends JpaRepository<ProfileEntity, Long> {
-    // 0.3 ~ 33,3km
+    // 0.4 ~ 44,4km
+    // dist - meters
     @Query(value = """
-    SELECT *
-    FROM locations l
-    WHERE ST_DWithin(l.point,:point,1)
-    AND l.id != :id
-    ORDER BY round(cast(st_distancesphere(l.point, :point) as numeric), 2)
+    SELECT l.profile_id, round(cast(st_distancesphere(l.point, :point) as numeric), 2) as dist
+    FROM profiles l
+    WHERE ST_DWithin(l.point,:point,0.4)
+    AND l.profile_id != :id
+    ORDER BY dist ASC
     """, nativeQuery = true)
-    List<ProfileEntity> findNearbyUsers(@Param("point") Point point, @Param("id") Long id);
+    List<ProfileProjection> findNearbyUsers(@Param("point") Point point, @Param("id") Long id);
 }

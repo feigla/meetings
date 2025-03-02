@@ -45,7 +45,7 @@ public class LocationService {
         ProfileEntity location = profileRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         return profileRepository.findNearbyUsers(location.getPoint(), userId)
                 .stream()
-                .map(x -> UserDto.builder().id(x.getId()).build())
+                .map(x -> UserDto.builder().id(x.getProfileId()).dist(x.getDist()).build())
                 .collect(Collectors.toList());
     }
 }
