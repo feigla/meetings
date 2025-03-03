@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.bogdsvn.recommendation.dtos.BioDto;
 import ru.bogdsvn.recommendation.dtos.PreferenceDto;
 import ru.bogdsvn.recommendation.dtos.ProfileDto;
+import ru.bogdsvn.recommendation.dtos.ResultDto;
 import ru.bogdsvn.recommendation.services.grpc.GrpcProfileClientService;
 import ru.bogdsvn.recommendation.services.grpc.GrpcProximityClientService;
 
@@ -23,7 +24,7 @@ public class RecommendationService {
     private final GrpcProximityClientService grpcProximityClientService;
     private final GrpcProfileClientService grpcProfileClientService;
 
-    public List<BioDto> getRecommendation(long id) {
+    public List<ResultDto> getRecommendation(long id) {
         nearbyProfiles = new ArrayList<>(50);
         userPreference = new PreferenceDto();
 
@@ -43,13 +44,22 @@ public class RecommendationService {
         throw new RuntimeException("Recommendation failed");
     }
 
-    private List<BioDto> filterProfiles() {
+    private List<ResultDto> filterProfiles() {
         return nearbyProfiles
                 .stream()
-                .map(p -> grpcProfileClientService.getBio(p.getId()))
-                .filter((BioDto bio) ->
-                        bio.getGender().equals(userPreference.getGender()) &&
-                        (userPreference.getAgeLowerBound() <= bio.getAge() && bio.getAge() <= userPreference.getAgeUpperBound())
+                .map(p -> {
+                    BioDto bio = grpcProfileClientService.getBio(p.getId());
+                    return ResultDto.builder()
+                            .age(bio.getAge())
+                            .name(bio.getName())
+                            .description(bio.getDescription())
+                            .gender(bio.getGender())
+                            .dist(p.getDist())
+                            .build();
+                })
+                .filter(rd ->
+                        rd.getGender().equals(userPreference.getGender()) &&
+                        (userPreference.getAgeLowerBound() <= rd.getAge() && rd.getAge() <= userPreference.getAgeUpperBound())
                 ).collect(Collectors.toList());
     }
 }

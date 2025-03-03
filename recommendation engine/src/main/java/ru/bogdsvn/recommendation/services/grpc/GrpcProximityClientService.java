@@ -30,6 +30,7 @@ public class GrpcProximityClientService extends ProximityServiceGrpc.ProximitySe
                             ProfileDto
                                     .builder()
                                     .id(p.getUserId())
+                                    .dist(p.getDist())
                                     .build()
                     ).collect(Collectors.toList());
         } catch (StatusRuntimeException e) {

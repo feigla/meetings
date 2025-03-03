@@ -9,7 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ProfileDto {
-    private Long id;
+public class ResultDto {
+    private String name;
+    private Integer age;
+    private String gender;
+    private String description;
     private Double dist; // in meters
 }
