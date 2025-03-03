@@ -21,6 +21,7 @@ public interface ProfileRepository extends JpaRepository<ProfileEntity, Long> {
     WHERE ST_DWithin(l.point,:point,0.4)
     AND l.profile_id != :id
     ORDER BY dist ASC
+    LIMIT 200
     """, nativeQuery = true)
     List<ProfileProjection> findNearbyUsers(@Param("point") Point point, @Param("id") Long id);
 }
