@@ -24,7 +24,7 @@ public class RecommendationServiceTest {
     private RecommendationService recommendationService;
 
     @Test
-    void givenProfileId_shouldSaveViewedProfile() {
+    void givenProfileId_shouldReturnRecommendations() {
         Mockito.doReturn(List.of(
                         ResultDto.builder()
                                 .id(2L)
