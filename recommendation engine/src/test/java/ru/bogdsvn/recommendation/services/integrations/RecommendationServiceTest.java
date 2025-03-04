@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 import ru.bogdsvn.recommendation.dtos.ResultDto;
 import ru.bogdsvn.recommendation.factories.ResultFactory;
 import ru.bogdsvn.recommendation.services.RecommendationService;
@@ -87,5 +88,11 @@ public class RecommendationServiceTest {
         for (int i = 5; i < 50; i++) {
             Assertions.assertTrue(mk.get(i).equals(viewedProfiles.get(i - 5)));
         }
+    }
+
+    @Transactional
+    @BeforeEach
+    public void clearDataBase() {
+        viewedProfileRepository.deleteAllInBatch();
     }
 }
