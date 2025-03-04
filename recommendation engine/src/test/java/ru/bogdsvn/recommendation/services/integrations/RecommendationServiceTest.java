@@ -44,7 +44,7 @@ public class RecommendationServiceTest {
                                 .build()
                 )
         ).when(recommendationService).fetchUsers(1);
-        recommendationService.getRecommendation(1);
-        Assertions.assertEquals(1, 1);
+        List<ResultDto> list = recommendationService.getRecommendation(1);
+        Assertions.assertEquals(2, list.size());
     }
 }

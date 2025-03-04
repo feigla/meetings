@@ -37,12 +37,18 @@ public class RecommendationService {
         List<ViewedProfileEntity> profiles = viewedProfileRepository.getLimitedViewedProfiles(id, Pageable.ofSize(5));
         List<ResultDto> recommendations;
         if (profiles.isEmpty()) {
-            recommendations = fetchUsers(id);
-            profiles = recommendations.stream()
+            List<ResultDto> filteredProfiles = fetchUsers(id);
+            profiles = filteredProfiles.stream()
                     .limit(50L)
+                    .skip(5)
                     .map(x -> viewedProfileFactory.makeViewedProfileEntity(x, id))
                     .collect(Collectors.toList());
-            viewedProfileRepository.saveAll(profiles);
+            if (!profiles.isEmpty()) {
+                viewedProfileRepository.saveAll(profiles);
+            }
+            recommendations = filteredProfiles.stream()
+                    .limit(5)
+                    .collect(Collectors.toList());
         } else {
             recommendations = profiles.stream()
                     .map(resultFactory::makeResultDto)
