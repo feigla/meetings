@@ -2,18 +2,24 @@ package ru.bogdsvn.recommendation.services.integrations;
 
 import net.devh.boot.grpc.client.autoconfigure.GrpcClientAutoConfiguration;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.bogdsvn.recommendation.dtos.ResultDto;
+import ru.bogdsvn.recommendation.factories.ResultFactory;
 import ru.bogdsvn.recommendation.services.RecommendationService;
+import ru.bogdsvn.recommendation.store.repositories.ViewedProfileRepository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ExtendWith(SpringExtension.class)
 @TestPropertySource("classpath:application-test.properties")
@@ -22,6 +28,12 @@ import java.util.List;
 public class RecommendationServiceTest {
     @SpyBean
     private RecommendationService recommendationService;
+
+    @Autowired
+    private ViewedProfileRepository viewedProfileRepository;
+
+    @Autowired
+    private ResultFactory resultFactory;
 
     @Test
     void givenProfileId_shouldReturnRecommendations() {
@@ -46,5 +58,34 @@ public class RecommendationServiceTest {
         ).when(recommendationService).fetchUsers(1);
         List<ResultDto> list = recommendationService.getRecommendation(1);
         Assertions.assertEquals(2, list.size());
+    }
+
+    @Test
+    void givenProfileId_shouldReturnRecommendationsAndSaveOthers() {
+        List<ResultDto> mk = new ArrayList<>();
+        for (int i = 0; i < 50; i++) {
+            mk.add(ResultDto.builder()
+                    .id(2L + i)
+                    .gender("MALE")
+                    .age(18 + i)
+                    .name(String.valueOf(i))
+                    .description("I'm " + i)
+                    .dist(100. + i)
+                    .build()
+            );
+        }
+        Mockito.doReturn(mk).when(recommendationService).fetchUsers(1);
+        List<ResultDto> recommendations = recommendationService.getRecommendation(1);
+        Assertions.assertEquals(5, recommendations.size());
+        for (int i = 0; i < 5; i++) {
+            Assertions.assertTrue(mk.get(i).equals(recommendations.get(i)));
+        }
+        List<ResultDto> viewedProfiles = viewedProfileRepository.findAll().stream()
+                .map(resultFactory::makeResultDto)
+                .collect(Collectors.toList());
+        Assertions.assertEquals(45, viewedProfiles.size());
+        for (int i = 5; i < 50; i++) {
+            Assertions.assertTrue(mk.get(i).equals(viewedProfiles.get(i - 5)));
+        }
     }
 }
