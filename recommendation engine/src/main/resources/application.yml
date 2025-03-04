@@ -11,7 +11,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 50
+        order_updates: true
+        order_inserts: true
 grpc:
   client:
     location-service:
