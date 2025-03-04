@@ -53,7 +53,7 @@ public class RecommendationService {
             recommendations = profiles.stream()
                     .map(resultFactory::makeResultDto)
                     .collect(Collectors.toList());
-            viewedProfileRepository.deleteAll(profiles);
+            viewedProfileRepository.deleteAllInBatch(profiles);
         }
         return recommendations;
     }
