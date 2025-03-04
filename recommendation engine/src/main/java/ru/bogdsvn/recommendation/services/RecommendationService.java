@@ -2,34 +2,62 @@ package ru.bogdsvn.recommendation.services;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.bogdsvn.recommendation.dtos.BioDto;
 import ru.bogdsvn.recommendation.dtos.PreferenceDto;
 import ru.bogdsvn.recommendation.dtos.ProfileDto;
 import ru.bogdsvn.recommendation.dtos.ResultDto;
+import ru.bogdsvn.recommendation.factories.ResultFactory;
+import ru.bogdsvn.recommendation.factories.ViewedProfileFactory;
 import ru.bogdsvn.recommendation.services.grpc.GrpcProfileClientService;
 import ru.bogdsvn.recommendation.services.grpc.GrpcProximityClientService;
+import ru.bogdsvn.recommendation.store.entities.ViewedProfileEntity;
+import ru.bogdsvn.recommendation.store.repositories.ViewedProfileRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 @Log4j2
 @RequiredArgsConstructor
 @Service
 public class RecommendationService {
-    private List<ProfileDto> nearbyProfiles;
-    private PreferenceDto userPreference;
-
     private final GrpcProximityClientService grpcProximityClientService;
     private final GrpcProfileClientService grpcProfileClientService;
+    private final ViewedProfileRepository viewedProfileRepository;
 
+    private final ViewedProfileFactory viewedProfileFactory;
+    private final ResultFactory resultFactory;
+
+    @Transactional
     public List<ResultDto> getRecommendation(long id) {
-        nearbyProfiles = new ArrayList<>(50);
-        userPreference = new PreferenceDto();
+        List<ViewedProfileEntity> profiles = viewedProfileRepository.getLimitedViewedProfiles(id, Pageable.ofSize(5));
+        List<ResultDto> recommendations;
+        if (profiles.isEmpty()) {
+            recommendations = fetchUsers(id);
+            profiles = recommendations.stream()
+                    .limit(50L)
+                    .map(x -> viewedProfileFactory.makeViewedProfileEntity(x, id))
+                    .collect(Collectors.toList());
+            viewedProfileRepository.saveAll(profiles);
+        } else {
+            recommendations = profiles.stream()
+                    .map(resultFactory::makeResultDto)
+                    .collect(Collectors.toList());
+            viewedProfileRepository.deleteAll(profiles);
+        }
+        return recommendations;
+    }
 
-        Thread thread1 = new Thread(() -> userPreference = grpcProfileClientService.getPreference(id));
-        Thread thread2 = new Thread(() -> nearbyProfiles = grpcProximityClientService.getNearbyProfiles(id));
+    public List<ResultDto> fetchUsers(long id) {
+        AtomicReference<List<ProfileDto>> nearbyProfiles = new AtomicReference<>(new ArrayList<>(50));
+        AtomicReference<PreferenceDto> userPreference = new AtomicReference<>(new PreferenceDto());
+
+        Thread thread1 = new Thread(() -> userPreference.set(grpcProfileClientService.getPreference(id)));
+        Thread thread2 = new Thread(() -> nearbyProfiles.set(grpcProximityClientService.getNearbyProfiles(id)));
 
         thread1.start();
         thread2.start();
@@ -37,25 +65,19 @@ public class RecommendationService {
         try {
             thread1.join();
             thread2.join();
-            return filterProfiles();
+            return filterProfiles(nearbyProfiles.get(), userPreference.get());
         } catch (Exception e) {
             log.error(e.getMessage());
         }
         throw new RuntimeException("Recommendation failed");
     }
 
-    private List<ResultDto> filterProfiles() {
+    private List<ResultDto> filterProfiles(List<ProfileDto> nearbyProfiles, PreferenceDto userPreference) {
         return nearbyProfiles
                 .stream()
                 .map(p -> {
                     BioDto bio = grpcProfileClientService.getBio(p.getId());
-                    return ResultDto.builder()
-                            .age(bio.getAge())
-                            .name(bio.getName())
-                            .description(bio.getDescription())
-                            .gender(bio.getGender())
-                            .dist(p.getDist())
-                            .build();
+                    return resultFactory.makeResultDto(bio, p);
                 })
                 .filter(rd ->
                         rd.getGender().equals(userPreference.getGender()) &&
