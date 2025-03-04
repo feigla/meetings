@@ -16,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.bogdsvn.recommendation.dtos.ResultDto;
 import ru.bogdsvn.recommendation.factories.ResultFactory;
 import ru.bogdsvn.recommendation.services.RecommendationService;
+import ru.bogdsvn.recommendation.store.ViewedProfileEmbeddedId;
+import ru.bogdsvn.recommendation.store.entities.ViewedProfileEntity;
 import ru.bogdsvn.recommendation.store.repositories.ViewedProfileRepository;
 
 import java.util.ArrayList;
@@ -35,6 +37,24 @@ public class RecommendationServiceTest {
 
     @Autowired
     private ResultFactory resultFactory;
+
+    void setUpFiftyProfiles() {
+        List<ViewedProfileEntity> list = new ArrayList<>();
+        for (int i = 0; i < 50; i++) {
+            list.add(ViewedProfileEntity.builder()
+                    .id(ViewedProfileEmbeddedId.builder()
+                            .profileId(1L)
+                            .viewedProfileId(2L + i)
+                            .build())
+                    .gender("MALE")
+                    .age(18 + i)
+                    .name(String.valueOf(i))
+                    .description("I'm " + (i + 1))
+                    .dist(100. + i)
+                    .build());
+        }
+        viewedProfileRepository.saveAll(list);
+    }
 
     @Test
     void givenProfileId_shouldReturnRecommendations() {
@@ -89,6 +109,23 @@ public class RecommendationServiceTest {
             Assertions.assertTrue(mk.get(i).equals(viewedProfiles.get(i - 5)));
         }
     }
+
+    @Test
+    void givenProfileId_shouldReturnNextViewedProfileAndDeleteIt() {
+        setUpFiftyProfiles();
+        List<ResultDto> recommendations = recommendationService.getRecommendation(1);
+        Assertions.assertEquals(5, recommendations.size());
+        List<ResultDto> viewedProfiles = viewedProfileRepository.findAll().stream()
+                .map(resultFactory::makeResultDto)
+                .collect(Collectors.toList());
+        Assertions.assertEquals(45, viewedProfiles.size());
+        for (ResultDto viewedProfile : viewedProfiles) {
+            for (ResultDto recommendation : recommendations) {
+                Assertions.assertFalse(viewedProfile.equals(recommendation));
+            }
+        }
+    }
+
 
     @Transactional
     @BeforeEach
