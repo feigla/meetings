@@ -23,6 +23,10 @@ message Response {
   bool ok = 1;
 }
 
+message ErrorResponse {
+  string message = 1;
+}
+
 service ProfileService {
   rpc getPreference(Profile) returns (Preference) {};
   rpc getBio(Profile) returns (Bio) {};
