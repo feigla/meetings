@@ -13,18 +13,6 @@ import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(UsernameExistException.class)
-    public ResponseEntity<ErrorDto> handleForbiddenException(Exception ex) {
-        return ResponseEntity
-                .status(HttpStatus.FORBIDDEN)
-                .body(ErrorDto
-                        .builder()
-                        .error(HttpStatus.FORBIDDEN.getReasonPhrase())
-                        .message(ex.getMessage())
-                        .build()
-                );
-    }
-
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseEntity<ErrorDto> handleNotFoundException(Exception ex) {
         return ResponseEntity
