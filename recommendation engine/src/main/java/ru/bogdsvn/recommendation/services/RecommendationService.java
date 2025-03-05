@@ -59,23 +59,10 @@ public class RecommendationService {
     }
 
     public List<ResultDto> fetchUsers(long id) {
-        AtomicReference<List<ProfileDto>> nearbyProfiles = new AtomicReference<>(new ArrayList<>(50));
-        AtomicReference<PreferenceDto> userPreference = new AtomicReference<>(new PreferenceDto());
+        PreferenceDto userPreference = grpcProfileClientService.getPreference(id);
+        List<ProfileDto> nearbyProfiles = grpcProximityClientService.getNearbyProfiles(id);
 
-        Thread thread1 = new Thread(() -> userPreference.set(grpcProfileClientService.getPreference(id)));
-        Thread thread2 = new Thread(() -> nearbyProfiles.set(grpcProximityClientService.getNearbyProfiles(id)));
-
-        thread1.start();
-        thread2.start();
-
-        try {
-            thread1.join();
-            thread2.join();
-            return filterProfiles(nearbyProfiles.get(), userPreference.get());
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
-        throw new RuntimeException("Recommendation failed");
+        return filterProfiles(nearbyProfiles, userPreference);
     }
 
     private List<ResultDto> filterProfiles(List<ProfileDto> nearbyProfiles, PreferenceDto userPreference) {
@@ -83,11 +70,14 @@ public class RecommendationService {
                 .stream()
                 .map(p -> {
                     BioDto bio = grpcProfileClientService.getBio(p.getId());
+                    if (bio == null) {
+                        return null;
+                    }
                     return resultFactory.makeResultDto(bio, p);
                 })
-                .filter(rd ->
+                .filter(rd -> rd != null &&
                         rd.getGender().equals(userPreference.getGender()) &&
-                        (userPreference.getAgeLowerBound() <= rd.getAge() && rd.getAge() <= userPreference.getAgeUpperBound())
-                ).collect(Collectors.toList());
+                        (userPreference.getAgeLowerBound() <= rd.getAge() && rd.getAge() <= userPreference.getAgeUpperBound()))
+                .collect(Collectors.toList());
     }
 }
