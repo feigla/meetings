@@ -1,5 +1,6 @@
 package ru.bogdsvn.profile.controllers;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +17,7 @@ public class BioController {
     private final BioService bioService;
 
     @PostMapping(FILL_BIO)
-    public BioDto fillBio(@RequestBody BioDto bio,
+    public BioDto fillBio(@RequestBody @Valid BioDto bio,
                           @RequestHeader("loggedId") String id) {
         return bioService.fillBio(bio, Long.valueOf(id));
     }

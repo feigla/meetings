@@ -1,5 +1,6 @@
 package ru.bogdsvn.profile.controllers;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +17,7 @@ public class PreferenceController {
     private final PreferenceService preferenceService;
 
     @PostMapping(FILL_PREFERENCE)
-    public PreferenceDto fillPreference(@RequestBody PreferenceDto preference,
+    public PreferenceDto fillPreference(@RequestBody @Valid PreferenceDto preference,
                                         @RequestHeader("loggedId") String id) {
         return preferenceService.fillPreference(preference, Long.valueOf(id));
     }
