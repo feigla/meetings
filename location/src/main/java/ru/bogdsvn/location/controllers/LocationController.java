@@ -1,5 +1,6 @@
 package ru.bogdsvn.location.controllers;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,7 @@ public class LocationController {
     private final LocationService locationService;
 
     @PostMapping(SAVE_LOCATION)
-    public ResponseEntity<Void> saveLocation(@RequestBody LocationDto location,
+    public ResponseEntity<Void> saveLocation(@RequestBody @Valid LocationDto location,
                                              @RequestHeader("loggedId") String id) {
         locationService.saveLocation(location, Long.parseLong(id));
         return ResponseEntity.ok().build();
