@@ -4,9 +4,9 @@ spring:
   application:
     name: profile-service
   datasource:
-    url: jdbc:postgresql://localhost:5432/profile_database
-    username: postgres
-    password: postgres
+    url: ${PROFILE_DB_URL:jdbc:postgresql://localhost:5432/profile_database}
+    username: ${PROFILE_DB_USER:postgres}
+    password: ${PROFILE_DB_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
