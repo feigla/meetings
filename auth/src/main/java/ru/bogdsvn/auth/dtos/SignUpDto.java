@@ -16,7 +16,7 @@ public class SignUpDto {
     @JsonProperty("username")
     private String username;
 
-    @Size(max = 255, message = "Длина пароля должна быть не более 255 символов")
+    @Size(min = 8, max = 255, message = "Длина пароля должна быть от 8 до 255 символов")
     @JsonProperty("password")
     private String password;
 }
