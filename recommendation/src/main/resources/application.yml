@@ -1,0 +1,32 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: recommendation-service
+  datasource:
+    url: ${RECOMMENDATION_DB_URL:jdbc:postgresql://localhost:5432/recommendation_database}
+    username: ${RECOMMENDATION_DB_USER:postgres}
+    password: ${RECOMMENDATION_DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 50
+        order_updates: true
+        order_inserts: true
+grpc:
+  client:
+    location-service:
+      address: ${LOCATION_SERVICE:127.0.0.1}:9898
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
+    profile-service:
+      address: ${PROFILE_SERVICE:127.0.0.1}:9899
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
+
