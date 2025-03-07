@@ -4,9 +4,9 @@ spring:
   application:
     name: location-service
   datasource:
-    url: jdbc:postgresql://localhost:5432/location_database
-    username: postgres
-    password: postgres
+    url: ${LOCATION_DB_URL:jdbc:postgresql://localhost:5432/location_database}
+    username: ${LOCATION_DB_USER:postgres}
+    password: ${LOCATION_DB_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
