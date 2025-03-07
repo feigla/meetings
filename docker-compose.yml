@@ -1,0 +1,123 @@
+version: '3.9'
+
+services:
+  auth-service:
+    container_name: auth-service
+    build:
+      context: ./
+      dockerfile: ./auth/Dockerfile
+    ports:
+      - 81:81
+    restart: on-failure
+    env_file:
+      - .env
+    depends_on:
+      - auth-db
+
+  auth-db:
+    container_name: auth-db
+    image: postgres:16
+    env_file:
+      - .env
+    volumes:
+      - auth-postgres-db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${AUTH_DB_USER}
+      POSTGRES_PASSWORD: ${AUTH_DB_PASSWORD}
+      POSTGRES_DB: ${AUTH_DB_DATABASE}
+    restart: always
+
+  gateway-api-service:
+    container_name: gateway-api-service
+    build:
+      context: ./
+      dockerfile: ./gateway-api/Dockerfile
+    ports:
+      - 80:80
+    restart: on-failure
+    env_file:
+      - .env
+
+  profile-service:
+    container_name: profile-service
+    build:
+      context: ./
+      dockerfile: ./profile/Dockerfile
+    ports:
+      - 8081:8081
+    restart: on-failure
+    env_file:
+      - .env
+    depends_on:
+      - profile-db
+
+  profile-db:
+    container_name: profile-db
+    image: postgres:16
+    env_file:
+      - .env
+    volumes:
+      - profile-postgres-db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${PROFILE_DB_USER}
+      POSTGRES_PASSWORD: ${PROFILE_DB_PASSWORD}
+      POSTGRES_DB: ${PROFILE_DB_DATABASE}
+    restart: always
+
+  location-service:
+    container_name: location-service
+    build:
+      context: ./
+      dockerfile: ./location/Dockerfile
+    ports:
+      - 8083:8083
+    restart: on-failure
+    env_file:
+      - .env
+    depends_on:
+      - location-db
+
+  location-db:
+    container_name: location-db
+    image: postgis/postgis:16-3.5
+    env_file:
+      - .env
+    volumes:
+      - location-postgres-db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${LOCATION_DB_USER}
+      POSTGRES_PASSWORD: ${LOCATION_DB_PASSWORD}
+      POSTGRES_DB: ${LOCATION_DB_DATABASE}
+    restart: always
+
+  recommendation-service:
+    container_name: recommendation-service
+    build:
+      context: ./
+      dockerfile: ./recommendation/Dockerfile
+    ports:
+      - 8082:8082
+    restart: on-failure
+    env_file:
+      - .env
+    depends_on:
+      - recommendation-db
+
+  recommendation-db:
+    container_name: recommendation-db
+    image: postgres:16
+    env_file:
+      - .env
+    volumes:
+      - recommendation-postgres-db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${RECOMMENDATION_DB_USER}
+      POSTGRES_PASSWORD: ${RECOMMENDATION_DB_PASSWORD}
+      POSTGRES_DB: ${RECOMMENDATION_DB_DATABASE}
+    restart: always
+
+volumes:
+  auth-postgres-db:
+  profile-postgres-db:
+  location-postgres-db:
+  recommendation-postgres-db:
