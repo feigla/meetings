@@ -1,7 +1,6 @@
 package ru.bogdsvn.profile.services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bogdsvn.profile.dtos.BioDto;
