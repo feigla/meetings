@@ -2,10 +2,7 @@ package ru.bogdsvn.profile.controllers;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.bogdsvn.profile.dtos.PreferenceDto;
 import ru.bogdsvn.profile.services.PreferenceService;
 
@@ -18,7 +15,13 @@ public class PreferenceController {
 
     @PostMapping(FILL_PREFERENCE)
     public PreferenceDto fillPreference(@RequestBody @Valid PreferenceDto preference,
-                                        @RequestHeader("loggedId") String id) {
-        return preferenceService.fillPreference(preference, Long.valueOf(id));
+                                        @RequestHeader("loggedId") Long id) {
+        return preferenceService.fillPreference(preference, id);
+    }
+
+    @PutMapping(FILL_PREFERENCE)
+    public PreferenceDto updatePreference(@RequestBody @Valid PreferenceDto preference,
+                                          @RequestHeader("loggedId") Long id) {
+        return preferenceService.updatePreference(preference, id);
     }
 }
