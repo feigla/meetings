@@ -3,10 +3,7 @@ package ru.bogdsvn.location.controllers;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.bogdsvn.location.dtos.LocationDto;
 import ru.bogdsvn.location.services.LocationService;
 
@@ -24,7 +21,7 @@ public class LocationController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping(SAVE_LOCATION)
+    @PutMapping(SAVE_LOCATION)
     public ResponseEntity<Void> updateLocation(@RequestBody @Valid LocationDto location,
                                              @RequestHeader("loggedId") Long id) {
         locationService.updateLocation(location, id);
