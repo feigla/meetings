@@ -17,7 +17,7 @@ public class RecommendationController {
     private final RecommendationService recommendationService;
 
     @GetMapping(GET_RECOMMENDATION)
-    public List<ResultDto> getRecommendation(@RequestHeader("loggedId") String id) {
-        return recommendationService.getRecommendation(Long.parseLong(id));
+    public List<ResultDto> getRecommendation(@RequestHeader("loggedId") Long id) {
+        return recommendationService.getRecommendation(id);
     }
 }
