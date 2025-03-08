@@ -60,4 +60,12 @@ public class PreferenceService {
 
         return preferenceFactory.makePreferenceDto(preferenceEntity);
     }
+
+    public PreferenceDto getPreference(long id) {
+        return preferenceFactory.makePreferenceDto(
+                preferenceRepository
+                        .findById(id)
+                        .orElseThrow(() -> new NotFoundException("Интересеы не заполнены"))
+                );
+    }
 }

@@ -61,4 +61,12 @@ public class BioService {
 
         return bioFactory.makeBioDto(bioEntity);
     }
+
+    public BioDto getBio(long id) {
+        return bioFactory.makeBioDto(
+                bioRepository
+                        .findById(id)
+                        .orElseThrow(() -> new NotFoundException("Информация о пользователе не заполнена"))
+        );
+    }
 }

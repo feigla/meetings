@@ -10,6 +10,7 @@ import ru.bogdsvn.profile.services.PreferenceService;
 @RestController
 public class PreferenceController {
     private final static String FILL_PREFERENCE = "/api/v1/profiles/preferences";
+    private final static String GET_PREFERENCE = "/api/v1/profiles/preferences";
 
     private final PreferenceService preferenceService;
 
@@ -23,5 +24,10 @@ public class PreferenceController {
     public PreferenceDto updatePreference(@RequestBody @Valid PreferenceDto preference,
                                           @RequestHeader("loggedId") Long id) {
         return preferenceService.updatePreference(preference, id);
+    }
+
+    @GetMapping(GET_PREFERENCE)
+    public PreferenceDto getPreference(@RequestHeader("loggedId") Long id) {
+        return preferenceService.getPreference(id);
     }
 }
