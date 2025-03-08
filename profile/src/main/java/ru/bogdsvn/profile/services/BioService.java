@@ -5,6 +5,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bogdsvn.profile.dtos.BioDto;
+import ru.bogdsvn.profile.errors.BadRequestException;
+import ru.bogdsvn.profile.errors.NotFoundException;
 import ru.bogdsvn.profile.factories.BioFactory;
 import ru.bogdsvn.profile.store.entites.BioEntity;
 import ru.bogdsvn.profile.store.entites.ProfileEntity;
@@ -21,24 +23,40 @@ public class BioService {
 
     @Transactional
     public BioDto fillBio(BioDto bioDto, Long id) {
-        BioEntity bioEntity = bioRepository.findById(id).orElse(null);
+        bioRepository
+                .findById(id)
+                .ifPresent((bioEntity) -> {
+                    throw new BadRequestException("Профиль уже заполнен");
+                });
 
-        if (bioEntity == null) {
-            ProfileEntity profileEntity = profileRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("Username not found"));
-            bioEntity =  BioEntity
-                    .builder()
-                    .name(bioDto.getName())
-                    .age(bioDto.getAge())
-                    .description(bioDto.getDescription())
-                    .gender(Gender.valueOf(bioDto.getGender()))
-                    .build();
-            bioEntity.setProfile(profileEntity);
-        } else {
-            bioEntity.setAge(bioDto.getAge());
-            bioEntity.setDescription(bioDto.getDescription());
-            bioEntity.setGender(Gender.valueOf(bioDto.getGender()));
-            bioEntity.setName(bioDto.getName());
-        }
+        ProfileEntity profileEntity = profileRepository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException("Профиль не найден"));
+
+        BioEntity bioEntity =  BioEntity
+                .builder()
+                .name(bioDto.getName())
+                .age(bioDto.getAge())
+                .description(bioDto.getDescription())
+                .gender(Gender.valueOf(bioDto.getGender()))
+                .profile(profileEntity)
+                .build();
+
+        bioRepository.save(bioEntity);
+
+        return bioFactory.makeBioDto(bioEntity);
+    }
+
+    @Transactional
+    public BioDto updateBio(BioDto bioDto, long id) {
+        BioEntity bioEntity = bioRepository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException("Информация о профиле не заполнена"));
+
+        bioEntity.setAge(bioDto.getAge());
+        bioEntity.setDescription(bioDto.getDescription());
+        bioEntity.setGender(Gender.valueOf(bioDto.getGender()));
+        bioEntity.setName(bioDto.getName());
 
         bioRepository.save(bioEntity);
 
