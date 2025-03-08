@@ -19,8 +19,15 @@ public class LocationController {
 
     @PostMapping(SAVE_LOCATION)
     public ResponseEntity<Void> saveLocation(@RequestBody @Valid LocationDto location,
-                                             @RequestHeader("loggedId") String id) {
-        locationService.saveLocation(location, Long.parseLong(id));
+                                             @RequestHeader("loggedId") Long id) {
+        locationService.saveLocation(location, id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping(SAVE_LOCATION)
+    public ResponseEntity<Void> updateLocation(@RequestBody @Valid LocationDto location,
+                                             @RequestHeader("loggedId") Long id) {
+        locationService.updateLocation(location, id);
         return ResponseEntity.ok().build();
     }
 }

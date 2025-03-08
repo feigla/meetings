@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bogdsvn.location.dtos.LocationDto;
 import ru.bogdsvn.location.dtos.UserDto;
+import ru.bogdsvn.location.errors.BadRequestException;
+import ru.bogdsvn.location.errors.NotFoundException;
 import ru.bogdsvn.location.store.entities.ProfileEntity;
 import ru.bogdsvn.location.store.repositories.ProfileRepository;
 
@@ -27,18 +29,39 @@ public class LocationService {
 
     @Transactional
     public void saveLocation(LocationDto locationDto, long userId) {
-        Point p = geometryFactory.createPoint(new Coordinate(locationDto.getLongitude(), locationDto.getLatitude()));
+        profileRepository
+                .findById(userId)
+                .ifPresent((profileEntity) -> {
+                    throw new BadRequestException("Местоположение уже указано");
+                });
 
-        ProfileEntity profile = profileRepository.findById(userId).orElse(null);
+        Point p = geometryFactory.createPoint(
+                new Coordinate(
+                        locationDto.getLongitude(),
+                        locationDto.getLatitude()
+                )
+        );
 
-        if (profile == null) {
-            profileRepository.save(ProfileEntity.builder()
-                    .id(userId)
-                    .point(p)
-                    .build());
-        } else {
-            profile.setPoint(p);
-        }
+        profileRepository.save(ProfileEntity.builder()
+                .id(userId)
+                .point(p)
+                .build());
+    }
+
+    @Transactional
+    public void updateLocation(LocationDto locationDto, long userId) {
+        ProfileEntity profile = profileRepository
+                .findById(userId)
+                .orElseThrow(() -> new NotFoundException("Местоположение не найдено"));
+
+        Point p = geometryFactory.createPoint(
+                new Coordinate(
+                        locationDto.getLongitude(),
+                        locationDto.getLatitude()
+                )
+        );
+
+        profile.setPoint(p);
     }
 
     public List<UserDto> getNearbyUsers(long userId) {
