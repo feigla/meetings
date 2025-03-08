@@ -7,13 +7,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Service;
-import org.springframework.web.ErrorResponse;
 import ru.bogdsvn.grcp.profile.ProfileOuterClass;
 import ru.bogdsvn.grcp.proximity.Proximity;
 import ru.bogdsvn.grcp.proximity.ProximityServiceGrpc;
 import ru.bogdsvn.recommendation.dtos.ProfileDto;
-import ru.bogdsvn.recommendation.errors.LocationNotFound;
-import ru.bogdsvn.recommendation.errors.PreferenceNotFoundException;
+import ru.bogdsvn.recommendation.errors.NotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,7 +40,7 @@ public class GrpcProximityClientService extends ProximityServiceGrpc.ProximitySe
         } catch (StatusRuntimeException e) {
             ProfileOuterClass.ErrorResponse errorResponse = Status.trailersFromThrowable(e)
                     .get(ProtoUtils.keyForProto(ProfileOuterClass.ErrorResponse.getDefaultInstance()));
-            throw new LocationNotFound(errorResponse.getMessage());
+            throw new NotFoundException(errorResponse.getMessage());
         }
     }
 }

@@ -6,13 +6,12 @@ import io.grpc.protobuf.ProtoUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.devh.boot.grpc.client.inject.GrpcClient;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import ru.bogdsvn.grcp.profile.ProfileOuterClass;
 import ru.bogdsvn.grcp.profile.ProfileServiceGrpc;
 import ru.bogdsvn.recommendation.dtos.BioDto;
 import ru.bogdsvn.recommendation.dtos.PreferenceDto;
-import ru.bogdsvn.recommendation.errors.PreferenceNotFoundException;
+import ru.bogdsvn.recommendation.errors.NotFoundException;
 
 @Log4j2
 @RequiredArgsConstructor
@@ -32,7 +31,7 @@ public class GrpcProfileClientService extends ProfileServiceGrpc.ProfileServiceI
         } catch (StatusRuntimeException e) {
             ProfileOuterClass.ErrorResponse errorResponse = Status.trailersFromThrowable(e)
                     .get(ProtoUtils.keyForProto(ProfileOuterClass.ErrorResponse.getDefaultInstance()));
-            throw new PreferenceNotFoundException(errorResponse.getMessage());
+            throw new NotFoundException(errorResponse.getMessage());
         }
     }
 
