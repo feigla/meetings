@@ -23,18 +23,22 @@ public class PreferenceService {
 
     @Transactional
     public PreferenceDto fillPreference(PreferenceDto preferenceDto, Long id) {
-        ProfileEntity profile = profileRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("Username not found"));
+        PreferenceEntity preferenceEntity = preferenceRepository.findById(id).orElse(null);
 
-        PreferenceEntity preferenceEntity = preferenceRepository.findById(id).orElse(
-                PreferenceEntity
-                        .builder()
-                        .gender(Gender.valueOf(preferenceDto.getGender()))
-                        .ageLowerBound(preferenceDto.getAgeLowerBound())
-                        .ageUpperBound(preferenceDto.getAgeUpperBound())
-                        .build()
-        );
+        if (preferenceEntity == null) {
+            ProfileEntity profile = profileRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("Username not found"));
+            preferenceEntity = PreferenceEntity.builder()
+                    .gender(Gender.valueOf(preferenceDto.getGender()))
+                    .ageLowerBound(preferenceDto.getAgeLowerBound())
+                    .ageUpperBound(preferenceDto.getAgeUpperBound())
+                    .build();
+            preferenceEntity.setProfile(profile);
+        } else {
+            preferenceEntity.setGender(Gender.valueOf(preferenceDto.getGender()));
+            preferenceEntity.setAgeLowerBound(preferenceDto.getAgeLowerBound());
+            preferenceEntity.setAgeUpperBound(preferenceDto.getAgeUpperBound());
+        }
 
-        preferenceEntity.setProfile(profile);
         preferenceRepository.save(preferenceEntity);
 
         return preferenceFactory.makePreferenceDto(preferenceEntity);

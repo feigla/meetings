@@ -21,16 +21,25 @@ public class BioService {
 
     @Transactional
     public BioDto fillBio(BioDto bioDto, Long id) {
-        ProfileEntity profileEntity = profileRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("Username not found"));
+        BioEntity bioEntity = bioRepository.findById(id).orElse(null);
 
-        BioEntity bioEntity =  BioEntity
-                .builder()
-                .name(bioDto.getName())
-                .age(bioDto.getAge())
-                .description(bioDto.getDescription())
-                .gender(Gender.valueOf(bioDto.getGender()))
-                .build();
-        bioEntity.setProfile(profileEntity);
+        if (bioEntity == null) {
+            ProfileEntity profileEntity = profileRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("Username not found"));
+            bioEntity =  BioEntity
+                    .builder()
+                    .name(bioDto.getName())
+                    .age(bioDto.getAge())
+                    .description(bioDto.getDescription())
+                    .gender(Gender.valueOf(bioDto.getGender()))
+                    .build();
+            bioEntity.setProfile(profileEntity);
+        } else {
+            bioEntity.setAge(bioDto.getAge());
+            bioEntity.setDescription(bioDto.getDescription());
+            bioEntity.setGender(Gender.valueOf(bioDto.getGender()));
+            bioEntity.setName(bioDto.getName());
+        }
+
         bioRepository.save(bioEntity);
 
         return bioFactory.makeBioDto(bioEntity);
