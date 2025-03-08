@@ -30,7 +30,7 @@ public class BioService {
 
         ProfileEntity profileEntity = profileRepository
                 .findById(id)
-                .orElseThrow(() -> new NotFoundException("Профиль не найден"));
+                .orElseThrow(() -> new NotFoundException("Пользователь не найден"));
 
         BioEntity bioEntity =  BioEntity
                 .builder()
@@ -50,7 +50,7 @@ public class BioService {
     public BioDto updateBio(BioDto bioDto, long id) {
         BioEntity bioEntity = bioRepository
                 .findById(id)
-                .orElseThrow(() -> new NotFoundException("Информация о профиле не заполнена"));
+                .orElseThrow(() -> new NotFoundException("Информация о пользователе не заполнена"));
 
         bioEntity.setAge(bioDto.getAge());
         bioEntity.setDescription(bioDto.getDescription());
