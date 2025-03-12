@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bogdsvn.auth.errors.UsernameExistException;
-import ru.bogdsvn.auth.services.grpc.GrpcProfileClientService;
 import ru.bogdsvn.auth.store.entities.UserEntity;
 import ru.bogdsvn.auth.store.repositories.UserRepository;
 
@@ -14,7 +13,6 @@ import ru.bogdsvn.auth.store.repositories.UserRepository;
 @Service
 public class UserService {
     private final UserRepository userRepository;
-    private final GrpcProfileClientService grpcProfileClientService;
 
     @Transactional
     public void createUser(UserEntity user) {
@@ -22,7 +20,6 @@ public class UserService {
             throw new UsernameExistException("Username already exists");
         }
         userRepository.save(user);
-        grpcProfileClientService.saveProfile(user.getId());
     }
 
     public UserEntity getUserByUsername(String username) {
