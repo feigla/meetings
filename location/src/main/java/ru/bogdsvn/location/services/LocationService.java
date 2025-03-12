@@ -74,4 +74,13 @@ public class LocationService {
                 .map(x -> UserDto.builder().id(x.getProfileId()).dist(x.getDist()).build())
                 .collect(Collectors.toList());
     }
+
+    @Transactional
+    public void setActive(long userId) {
+        ProfileEntity location = profileRepository
+                .findById(userId)
+                .orElseThrow(() -> new NotFoundException("Местоположение не указано"));
+
+        location.setIsActive(!location.getIsActive());
+    }
 }
