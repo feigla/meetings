@@ -19,10 +19,6 @@ message Bio {
   string description = 4;
 }
 
-message Response {
-  bool ok = 1;
-}
-
 message ErrorResponse {
   string message = 1;
 }
@@ -30,5 +26,4 @@ message ErrorResponse {
 service ProfileService {
   rpc getPreference(Profile) returns (Preference) {};
   rpc getBio(Profile) returns (Bio) {};
-  rpc saveProfile(Profile) returns (Response) {};
 }
