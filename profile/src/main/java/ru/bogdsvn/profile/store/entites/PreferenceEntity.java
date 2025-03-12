@@ -2,7 +2,10 @@ package ru.bogdsvn.profile.store.entites;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.domain.Persistable;
 import ru.bogdsvn.profile.utils.Gender;
+
+import java.io.Serializable;
 
 @Builder
 @Getter
@@ -11,9 +14,13 @@ import ru.bogdsvn.profile.utils.Gender;
 @NoArgsConstructor
 @Entity
 @Table(name = "preferences")
-public class PreferenceEntity {
+public class PreferenceEntity implements Persistable<Long> {
     @Id
     private Long id;
+
+    @Transient
+    @Builder.Default
+    private boolean isNew = true;
 
     private Integer ageLowerBound;
 
@@ -22,8 +29,8 @@ public class PreferenceEntity {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
-    @MapsId
-    private ProfileEntity profile;
+    @Override
+    public boolean isNew() {
+        return isNew;
+    }
 }

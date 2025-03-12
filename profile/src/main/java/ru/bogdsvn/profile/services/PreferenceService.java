@@ -9,9 +9,7 @@ import ru.bogdsvn.profile.errors.BadRequestException;
 import ru.bogdsvn.profile.errors.NotFoundException;
 import ru.bogdsvn.profile.factories.PreferenceFactory;
 import ru.bogdsvn.profile.store.entites.PreferenceEntity;
-import ru.bogdsvn.profile.store.entites.ProfileEntity;
 import ru.bogdsvn.profile.store.repositories.PreferenceRepository;
-import ru.bogdsvn.profile.store.repositories.ProfileRepository;
 import ru.bogdsvn.profile.utils.Gender;
 
 @Log4j2
@@ -19,7 +17,6 @@ import ru.bogdsvn.profile.utils.Gender;
 @Service
 public class PreferenceService {
     private final PreferenceFactory preferenceFactory;
-    private final ProfileRepository profileRepository;
     private final PreferenceRepository preferenceRepository;
 
     @Transactional
@@ -30,15 +27,10 @@ public class PreferenceService {
                     throw new BadRequestException("Интересы уже заполнены");
                 });
 
-        ProfileEntity profile = profileRepository
-                .findById(id)
-                .orElseThrow(() -> new NotFoundException("Пользователь не найден"));
-
         PreferenceEntity preferenceEntity = PreferenceEntity.builder()
                 .gender(Gender.valueOf(preferenceDto.getGender()))
                 .ageLowerBound(preferenceDto.getAgeLowerBound())
                 .ageUpperBound(preferenceDto.getAgeUpperBound())
-                .profile(profile)
                 .build();
 
         preferenceRepository.save(preferenceEntity);

@@ -7,16 +7,12 @@ import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.devh.boot.grpc.server.service.GrpcService;
-import org.springframework.http.HttpStatus;
-import org.springframework.transaction.annotation.Transactional;
 import ru.bogdsvn.grcp.profile.ProfileOuterClass;
 import ru.bogdsvn.grcp.profile.ProfileServiceGrpc;
 import ru.bogdsvn.profile.store.entites.BioEntity;
 import ru.bogdsvn.profile.store.entites.PreferenceEntity;
-import ru.bogdsvn.profile.store.entites.ProfileEntity;
 import ru.bogdsvn.profile.store.repositories.BioRepository;
 import ru.bogdsvn.profile.store.repositories.PreferenceRepository;
-import ru.bogdsvn.profile.store.repositories.ProfileRepository;
 
 @Log4j2
 @RequiredArgsConstructor
@@ -24,7 +20,6 @@ import ru.bogdsvn.profile.store.repositories.ProfileRepository;
 public class GrpcProfileServerService extends ProfileServiceGrpc.ProfileServiceImplBase {
     private final BioRepository bioRepository;
     private final PreferenceRepository preferenceRepository;
-    private final ProfileRepository profileRepository;
 
     @Override
     public void getPreference(ProfileOuterClass.Profile request, StreamObserver<ProfileOuterClass.Preference> responseObserver) {
@@ -71,16 +66,6 @@ public class GrpcProfileServerService extends ProfileServiceGrpc.ProfileServiceI
                 .build();
 
         responseObserver.onNext(bio);
-        responseObserver.onCompleted();
-    }
-
-    @Transactional
-    @Override
-    public void saveProfile(ProfileOuterClass.Profile request, StreamObserver<ProfileOuterClass.Response> responseObserver) {
-        profileRepository.save(ProfileEntity.builder()
-                .id(request.getUserId())
-                .build());
-        responseObserver.onNext(ProfileOuterClass.Response.newBuilder().setOk(true).build());
         responseObserver.onCompleted();
     }
 }
