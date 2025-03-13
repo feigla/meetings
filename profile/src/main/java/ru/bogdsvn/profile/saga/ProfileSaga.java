@@ -7,11 +7,14 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
+import ru.bogdsvn.profile.commands.ProcessedLocationCommand;
+import ru.bogdsvn.profile.commands.ProcessedRecommendationCommand;
 
 @Component
 @RequiredArgsConstructor
 @KafkaListener(topics = {
-        "${recommendation.command.topic}"
+        "${recommendation.command.topic}",
+        "${location.command.topic}"
 })
 public class ProfileSaga {
     @Value("${location.command.topic}")
@@ -27,12 +30,16 @@ public class ProfileSaga {
     }
 
     @KafkaHandler
-    public void handleEvent(@Payload Object payload) {
-        kafkaTemplate.send(recommendationCommandTopic, payload);
+    private void handleEvent(@Payload ProcessedLocationCommand command) {
+        kafkaTemplate.send(recommendationCommandTopic, command.getId());
     }
 
     @KafkaHandler
-    public void handleEvent(@Payload String k) {
+    private void handleEvent(@Payload ProcessedRecommendationCommand command) {
+        stopSaga(command.getId());
+    }
+
+    public void stopSaga(long id) {
 
     }
 }
