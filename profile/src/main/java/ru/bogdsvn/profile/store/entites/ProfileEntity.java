@@ -19,13 +19,9 @@ public class ProfileEntity implements Persistable<Long> {
     @Builder.Default
     private boolean isNew = true;
 
-    @Column(name = "location_updated")
+    @Column(name = "is_active")
     @Builder.Default
-    private Boolean locationUpdated = false;
-
-    @Column(name = "recommendation_updated")
-    @Builder.Default
-    private Boolean recommendationUpdated = false;
+    private Boolean isActive = true;
 
     @Override
     public boolean isNew() {
