@@ -10,8 +10,8 @@ import org.springframework.data.domain.Persistable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "profiles")
-public class ProfileEntity implements Persistable<Long> {
+@Table(name = "deactivated_profiles")
+public class DeactivatedProfileEntity implements Persistable<Long> {
     @Id
     private Long id;
 
@@ -19,12 +19,16 @@ public class ProfileEntity implements Persistable<Long> {
     @Builder.Default
     private boolean isNew = true;
 
-    @Column(name = "is_active")
+    @Enumerated
     @Builder.Default
-    private Boolean isActive = true;
+    private Status status = Status.PROCESSED;
 
     @Override
     public boolean isNew() {
         return isNew;
+    }
+
+    public enum Status {
+        PROCESSED, FINISHED
     }
 }

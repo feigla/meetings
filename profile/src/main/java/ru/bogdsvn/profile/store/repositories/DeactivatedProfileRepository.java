@@ -2,8 +2,8 @@ package ru.bogdsvn.profile.store.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ru.bogdsvn.profile.store.entites.ProfileEntity;
+import ru.bogdsvn.profile.store.entites.DeactivatedProfileEntity;
 
 @Repository
-public interface ProfileRepository extends JpaRepository<ProfileEntity, Long> {
+public interface DeactivatedProfileRepository extends JpaRepository<DeactivatedProfileEntity, Long> {
 }
