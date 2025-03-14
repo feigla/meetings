@@ -13,8 +13,8 @@ import ru.bogdsvn.kafka_library.commands.ProcessedRecommendationCommand;
 @Component
 @RequiredArgsConstructor
 @KafkaListener(topics = {
-        "${recommendation.command.topic}",
-        "${location.command.topic}"
+        "${recommendation.event.topic}",
+        "${location.event.topic}"
 })
 public class ProfileSaga {
     @Value("${location.command.topic}")

@@ -32,9 +32,13 @@ spring:
 location:
   command:
     topic: locations-command
+  event:
+    topic: location-event
 recommendation:
   command:
     topic: recommendations-command
+  event:
+    topic: recommendations-event
 
 
 grpc:
