@@ -14,7 +14,7 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(ErrorDto.builder()
                         .error(HttpStatus.BAD_REQUEST.getReasonPhrase())
-                        .message(ex.getBindingResult().getAllErrors().getFirst().getDefaultMessage())
+                        .message(ex.getBindingResult().getAllErrors().get(0).getDefaultMessage())
                         .build()
                 );
     }
