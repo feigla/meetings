@@ -11,6 +11,7 @@ import ru.bogdsvn.kafka_library.commands.ProcessedLocationCommand;
 import ru.bogdsvn.kafka_library.commands.ProcessedRecommendationCommand;
 import ru.bogdsvn.kafka_library.events.ProcessedLocationEvent;
 import ru.bogdsvn.kafka_library.events.ProcessedRecommendationEvent;
+import ru.bogdsvn.profile.services.DeactivatedProfileService;
 
 @Component
 @RequiredArgsConstructor
@@ -26,6 +27,8 @@ public class ProfileSaga {
     private String recommendationCommandTopic;
 
     private final KafkaTemplate<String, Object> kafkaTemplate;
+
+    private final DeactivatedProfileService deactivatedProfileService;
 
     public void startSaga(long id) {
         kafkaTemplate.send(
@@ -48,10 +51,6 @@ public class ProfileSaga {
 
     @KafkaHandler
     private void handleEvent(@Payload ProcessedRecommendationEvent event) {
-        stopSaga(event.getId());
-    }
-
-    public void stopSaga(long id) {
-
+        deactivatedProfileService.setStatusDeactivatedProfileFinished(event.getId());
     }
 }
