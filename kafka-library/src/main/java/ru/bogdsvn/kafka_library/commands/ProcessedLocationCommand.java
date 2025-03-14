@@ -1,4 +1,4 @@
-package ru.bogdsvn.profile.commands;
+package ru.bogdsvn.kafka_library.commands;
 
 import lombok.Getter;
 import lombok.Setter;
