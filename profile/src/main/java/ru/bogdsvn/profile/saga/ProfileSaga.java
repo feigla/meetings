@@ -9,6 +9,8 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 import ru.bogdsvn.kafka_library.commands.ProcessedLocationCommand;
 import ru.bogdsvn.kafka_library.commands.ProcessedRecommendationCommand;
+import ru.bogdsvn.kafka_library.events.ProcessedLocationEvent;
+import ru.bogdsvn.kafka_library.events.ProcessedRecommendationEvent;
 
 @Component
 @RequiredArgsConstructor
@@ -30,13 +32,13 @@ public class ProfileSaga {
     }
 
     @KafkaHandler
-    private void handleEvent(@Payload ProcessedLocationCommand command) {
-        kafkaTemplate.send(recommendationCommandTopic, command.getId());
+    private void handleEvent(@Payload ProcessedLocationEvent event) {
+        kafkaTemplate.send(recommendationCommandTopic, event.getId());
     }
 
     @KafkaHandler
-    private void handleEvent(@Payload ProcessedRecommendationCommand command) {
-        stopSaga(command.getId());
+    private void handleEvent(@Payload ProcessedRecommendationEvent event) {
+        stopSaga(event.getId());
     }
 
     public void stopSaga(long id) {
