@@ -76,11 +76,9 @@ public class LocationService {
     }
 
     @Transactional
-    public void setActive(long userId) {
-        ProfileEntity location = profileRepository
+    public void deactivate(long userId) {
+        profileRepository
                 .findById(userId)
-                .orElseThrow(() -> new NotFoundException("Местоположение не указано"));
-
-        location.setIsActive(!location.getIsActive());
+                .ifPresent(location -> location.setIsActive(false));
     }
 }
