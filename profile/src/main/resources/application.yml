@@ -28,6 +28,11 @@ spring:
       group-id: profile-group
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: ru.bogdsvn.kafka_library.*
 
 location:
   command:
