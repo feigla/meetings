@@ -93,6 +93,12 @@
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>ru.bogdsvn</groupId>
+            <artifactId>kafka-library</artifactId>
+            <version>0.0.1</version>
+        </dependency>
     </dependencies>
 
     <build>
