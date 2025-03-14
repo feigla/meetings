@@ -7,8 +7,8 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
-import ru.bogdsvn.profile.commands.ProcessedLocationCommand;
-import ru.bogdsvn.profile.commands.ProcessedRecommendationCommand;
+import ru.bogdsvn.kafka_library.commands.ProcessedLocationCommand;
+import ru.bogdsvn.kafka_library.commands.ProcessedRecommendationCommand;
 
 @Component
 @RequiredArgsConstructor

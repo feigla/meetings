@@ -77,6 +77,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>ru.bogdsvn</groupId>
+            <artifactId>kafka-library</artifactId>
+            <version>0.0.1</version>
+        </dependency>
     </dependencies>
 
     <build>
