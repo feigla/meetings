@@ -28,12 +28,22 @@ public class ProfileSaga {
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
     public void startSaga(long id) {
-        kafkaTemplate.send(locationCommandTopic, id);
+        kafkaTemplate.send(
+                locationCommandTopic,
+                ProcessedLocationCommand.builder()
+                        .id(id)
+                        .build()
+        );
     }
 
     @KafkaHandler
     private void handleEvent(@Payload ProcessedLocationEvent event) {
-        kafkaTemplate.send(recommendationCommandTopic, event.getId());
+        kafkaTemplate.send(
+                recommendationCommandTopic,
+                ProcessedRecommendationCommand.builder()
+                        .id(event.getId())
+                        .build()
+        );
     }
 
     @KafkaHandler
