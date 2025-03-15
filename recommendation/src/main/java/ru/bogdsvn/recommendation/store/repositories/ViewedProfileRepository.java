@@ -17,4 +17,10 @@ public interface ViewedProfileRepository extends JpaRepository<ViewedProfileEnti
         WHERE p.id.profileId = :id
     """)
     List<ViewedProfileEntity> getLimitedViewedProfiles(@Param("id") Long id, Pageable page);
+
+    @Query(value = """
+        DELETE FROM ViewedProfileEntity p
+        WHERE p.id.profileId = :id
+    """)
+    void deleteViewedProfilesById(@Param("id") Long id);
 }

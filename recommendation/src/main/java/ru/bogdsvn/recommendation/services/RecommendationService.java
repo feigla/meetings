@@ -80,4 +80,9 @@ public class RecommendationService {
                         (userPreference.getAgeLowerBound() <= rd.getAge() && rd.getAge() <= userPreference.getAgeUpperBound()))
                 .collect(Collectors.toList());
     }
+
+    @Transactional
+    public void deleteViewedProfilesById(long id) {
+        viewedProfileRepository.deleteViewedProfilesById(id);
+    }
 }
