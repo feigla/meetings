@@ -49,12 +49,12 @@ recommendation:
 grpc:
   client:
     location-service:
-      address: ${LOCATION_SERVICE:127.0.0.1}:9898
+      address: ${LOCATION_SERVICE:localhost}:9898
       enableKeepAlive: true
       keepAliveWithoutCalls: true
       negotiationType: plaintext
     profile-service:
-      address: ${PROFILE_SERVICE:127.0.0.1}:9899
+      address: ${PROFILE_SERVICE:localhost}:9899
       enableKeepAlive: true
       keepAliveWithoutCalls: true
       negotiationType: plaintext
