@@ -9,6 +9,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 import ru.bogdsvn.kafka_library.commands.ProcessedLocationCommand;
 import ru.bogdsvn.kafka_library.events.ProcessedLocationEvent;
+import ru.bogdsvn.kafka_library.utils.Status;
 import ru.bogdsvn.location.services.LocationService;
 
 @Component
@@ -26,11 +27,17 @@ public class LocationHandler {
 
     @KafkaHandler
     public void handleCommand(@Payload ProcessedLocationCommand command) {
-        locationService.deactivate(command.getId());
+        if (command.getStatus().equals(Status.DEACTIVATE_PROCESSED)) {
+            locationService.deactivate(command.getId());
+        } else {
+            locationService.activate(command.getId());
+        }
+
         kafkaTemplate.send(
                 locationEventTopic,
                 ProcessedLocationEvent.builder()
                         .id(command.getId())
+                        .status(command.getStatus())
                         .build()
         );
     }

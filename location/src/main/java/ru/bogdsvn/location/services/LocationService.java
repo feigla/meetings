@@ -81,4 +81,11 @@ public class LocationService {
                 .findById(userId)
                 .ifPresent(location -> location.setIsActive(false));
     }
+
+    @Transactional
+    public void activate(long userId) {
+        profileRepository
+                .findById(userId)
+                .ifPresent(location -> location.setIsActive(true));
+    }
 }
