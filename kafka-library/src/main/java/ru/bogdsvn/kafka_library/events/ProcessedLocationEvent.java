@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.bogdsvn.kafka_library.utils.Status;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -11,4 +12,5 @@ import lombok.NoArgsConstructor;
 @Data
 public class ProcessedLocationEvent {
     private Long id;
+    private Status status;
 }

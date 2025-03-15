@@ -1,6 +1,7 @@
 package ru.bogdsvn.kafka_library.commands;
 
 import lombok.*;
+import ru.bogdsvn.kafka_library.utils.Status;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -8,4 +9,5 @@ import lombok.*;
 @Data
 public class ProcessedRecommendationCommand {
     private Long id;
+    private Status status;
 }
