@@ -3,6 +3,7 @@ package ru.bogdsvn.profile.store.entites;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.domain.Persistable;
+import ru.bogdsvn.kafka_library.utils.Status;
 
 @Builder
 @Getter
@@ -21,14 +22,10 @@ public class DeactivatedProfileEntity implements Persistable<Long> {
 
     @Enumerated
     @Builder.Default
-    private Status status = Status.PROCESSED;
+    private Status status = Status.DEACTIVATE_PROCESSED;
 
     @Override
     public boolean isNew() {
         return isNew;
-    }
-
-    public enum Status {
-        PROCESSED, FINISHED
     }
 }

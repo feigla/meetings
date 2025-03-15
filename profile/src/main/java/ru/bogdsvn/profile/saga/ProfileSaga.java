@@ -20,7 +20,7 @@ import ru.bogdsvn.profile.services.DeactivatedProfileService;
         "${recommendation.event.topic}",
         "${location.event.topic}"
 })
-public class DeactivatedProfileSaga {
+public class ProfileSaga {
     @Value("${location.command.topic}")
     private String locationCommandTopic;
 
@@ -31,24 +31,28 @@ public class DeactivatedProfileSaga {
 
     private final DeactivatedProfileService deactivatedProfileService;
 
-    public void startSaga(long id) {
+    public void startSaga(long id, Status status) {
         kafkaTemplate.send(
                 locationCommandTopic,
                 ProcessedLocationCommand.builder()
                         .id(id)
-                        .status(Status.DEACTIVATE_PROCESSED)
+                        .status(status)
                         .build()
         );
     }
 
     @KafkaHandler
     private void handleEvent(@Payload ProcessedLocationEvent event) {
-        kafkaTemplate.send(
-                recommendationCommandTopic,
-                ProcessedRecommendationCommand.builder()
-                        .id(event.getId())
-                        .build()
-        );
+        if (event.getStatus().equals(Status.DEACTIVATE_PROCESSED)) {
+            kafkaTemplate.send(
+                    recommendationCommandTopic,
+                    ProcessedRecommendationCommand.builder()
+                            .id(event.getId())
+                            .build()
+            );
+        } else {
+            deactivatedProfileService.deleteDeactivatedProfile(event.getId());
+        }
     }
 
     @KafkaHandler
