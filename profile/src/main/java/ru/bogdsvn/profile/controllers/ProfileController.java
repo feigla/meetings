@@ -11,7 +11,7 @@ import ru.bogdsvn.profile.services.DeactivatedProfileService;
 
 @RequiredArgsConstructor
 @RestController
-public class DeactivatedProfileController {
+public class ProfileController {
     private final static String DEACTIVATE_PROFILE = "/api/v1/profiles/deactivate";
     private final static String ACTIVATE_PROFILE = "/api/v1/profiles/activate";
     private final static String GET_STATUS_PROFILE = "/api/v1/profiles/status";
