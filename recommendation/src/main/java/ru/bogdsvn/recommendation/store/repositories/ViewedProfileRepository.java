@@ -2,6 +2,7 @@ package ru.bogdsvn.recommendation.store.repositories;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -22,5 +23,6 @@ public interface ViewedProfileRepository extends JpaRepository<ViewedProfileEnti
         DELETE FROM ViewedProfileEntity p
         WHERE p.id.profileId = :id
     """)
+    @Modifying
     void deleteViewedProfilesById(@Param("id") Long id);
 }
