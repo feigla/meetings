@@ -31,6 +31,7 @@ public class RecommendationHandler {
                 recommendationEventTopic,
                 ProcessedRecommendationEvent.builder()
                         .id(command.getId())
+                        .status(command.getStatus())
                         .build()
         );
     }
