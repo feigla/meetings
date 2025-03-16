@@ -19,7 +19,8 @@ public class DeactivatedProfileService {
         profileRepository
                 .findById(id)
                 .ifPresent(profile -> {
-                    if (profile.getStatus().equals(Status.FINISHED)) {
+                    if (profile.getStatus().equals(Status.FINISHED) ||
+                        profile.getStatus().equals(Status.ACTIVATE_PROCESSED)) {
                         status.setActive(false);
                     }
                 });

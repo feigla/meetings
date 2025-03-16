@@ -48,6 +48,7 @@ public class ProfileSaga {
                     recommendationCommandTopic,
                     ProcessedRecommendationCommand.builder()
                             .id(event.getId())
+                            .status(event.getStatus())
                             .build()
             );
         } else {
