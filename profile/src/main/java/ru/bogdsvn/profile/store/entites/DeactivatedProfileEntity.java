@@ -20,7 +20,7 @@ public class DeactivatedProfileEntity implements Persistable<Long> {
     @Builder.Default
     private boolean isNew = true;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Builder.Default
     private Status status = Status.DEACTIVATE_PROCESSED;
 
