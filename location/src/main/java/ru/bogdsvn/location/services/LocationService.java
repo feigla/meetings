@@ -74,4 +74,18 @@ public class LocationService {
                 .map(x -> UserDto.builder().id(x.getProfileId()).dist(x.getDist()).build())
                 .collect(Collectors.toList());
     }
+
+    @Transactional
+    public void deactivate(long userId) {
+        profileRepository
+                .findById(userId)
+                .ifPresent(location -> location.setIsActive(false));
+    }
+
+    @Transactional
+    public void activate(long userId) {
+        profileRepository
+                .findById(userId)
+                .ifPresent(location -> location.setIsActive(true));
+    }
 }

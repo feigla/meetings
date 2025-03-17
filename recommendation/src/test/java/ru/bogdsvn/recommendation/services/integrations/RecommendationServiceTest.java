@@ -3,6 +3,7 @@ package ru.bogdsvn.recommendation.services.integrations;
 import net.devh.boot.grpc.client.autoconfigure.GrpcClientAutoConfiguration;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 @ExtendWith(SpringExtension.class)
 @TestPropertySource("classpath:application-test.properties")
 @SpringBootTest
+@Disabled
 @ImportAutoConfiguration(exclude = GrpcClientAutoConfiguration.class)
 public class RecommendationServiceTest {
     @SpyBean

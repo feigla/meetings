@@ -20,6 +20,7 @@ public interface ProfileRepository extends JpaRepository<ProfileEntity, Long> {
     FROM profiles l
     WHERE ST_DWithin(l.point,:point,0.4)
     AND l.profile_id != :id
+    AND l.is_active = true
     ORDER BY dist ASC
     LIMIT 200
     """, nativeQuery = true)

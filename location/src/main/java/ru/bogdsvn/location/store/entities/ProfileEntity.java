@@ -25,6 +25,10 @@ public class ProfileEntity implements Persistable<Long> {
     @Column(columnDefinition = "geometry(Point,4326)", nullable = false)
     private Point point;
 
+    @Column(name = "is_active")
+    @Builder.Default
+    private Boolean isActive = true;
+
     @Override
     public boolean isNew() {
         return isNew;
