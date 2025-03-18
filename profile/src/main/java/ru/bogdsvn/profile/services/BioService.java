@@ -27,6 +27,7 @@ public class BioService {
 
         BioEntity bioEntity =  BioEntity
                 .builder()
+                .id(id)
                 .name(bioDto.getName())
                 .age(bioDto.getAge())
                 .description(bioDto.getDescription())
@@ -39,7 +40,7 @@ public class BioService {
     }
 
     @Transactional
-    public BioDto updateBio(BioDto bioDto, long id) {
+    public void updateBio(BioDto bioDto, long id) {
         BioEntity bioEntity = bioRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException("Информация о пользователе не заполнена"));
@@ -50,8 +51,6 @@ public class BioService {
         bioEntity.setName(bioDto.getName());
 
         bioRepository.save(bioEntity);
-
-        return bioFactory.makeBioDto(bioEntity);
     }
 
     public BioDto getBio(long id) {

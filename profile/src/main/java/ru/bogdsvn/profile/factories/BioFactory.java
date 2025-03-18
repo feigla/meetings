@@ -9,6 +9,7 @@ public class BioFactory {
     public BioDto makeBioDto(BioEntity entity) {
         return BioDto
                 .builder()
+                .id(entity.getId())
                 .age(entity.getAge())
                 .name(entity.getName())
                 .description(entity.getDescription())

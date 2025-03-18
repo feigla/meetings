@@ -28,6 +28,7 @@ public class PreferenceService {
                 });
 
         PreferenceEntity preferenceEntity = PreferenceEntity.builder()
+                .id(id)
                 .gender(Gender.valueOf(preferenceDto.getGender()))
                 .ageLowerBound(preferenceDto.getAgeLowerBound())
                 .ageUpperBound(preferenceDto.getAgeUpperBound())
@@ -39,7 +40,7 @@ public class PreferenceService {
     }
 
     @Transactional
-    public PreferenceDto updatePreference(PreferenceDto preferenceDto, long id) {
+    public void updatePreference(PreferenceDto preferenceDto, long id) {
         PreferenceEntity preferenceEntity = preferenceRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException("Интересы не заполнены"));
@@ -49,8 +50,6 @@ public class PreferenceService {
         preferenceEntity.setAgeUpperBound(preferenceDto.getAgeUpperBound());
 
         preferenceRepository.save(preferenceEntity);
-
-        return preferenceFactory.makePreferenceDto(preferenceEntity);
     }
 
     public PreferenceDto getPreference(long id) {

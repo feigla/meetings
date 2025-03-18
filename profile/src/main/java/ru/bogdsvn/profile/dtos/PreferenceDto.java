@@ -14,6 +14,9 @@ import ru.bogdsvn.profile.annotations.ValidAgeRange;
 @NoArgsConstructor
 @Data
 public class PreferenceDto {
+    @JsonProperty(value = "id", access = JsonProperty.Access.READ_ONLY)
+    private Long id;
+
     @JsonProperty("gender")
     @Pattern(regexp = "MALE|FEMALE", message = "Пол может быть MALE или FEMALE")
     @NotNull

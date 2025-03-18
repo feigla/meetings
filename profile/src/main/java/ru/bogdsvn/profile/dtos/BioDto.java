@@ -12,6 +12,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class BioDto {
+    @JsonProperty(value = "id", access = JsonProperty.Access.READ_ONLY)
+    private Long id;
+
     @JsonProperty("name")
     @Size(min = 1, max = 45, message = "Имя пользователя должно иметь длину до 45 символов")
     @NotNull
