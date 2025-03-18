@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.bogdsvn.kafka_library.utils.Status;
 
 @Builder
 @NoArgsConstructor
@@ -14,6 +15,9 @@ import lombok.NoArgsConstructor;
 public class BioDto {
     @JsonProperty(value = "id", access = JsonProperty.Access.READ_ONLY)
     private Long id;
+
+    @JsonProperty(value = "status", access = JsonProperty.Access.READ_ONLY)
+    private Status status;
 
     @JsonProperty("name")
     @Size(min = 1, max = 45, message = "Имя пользователя должно иметь длину до 45 символов")

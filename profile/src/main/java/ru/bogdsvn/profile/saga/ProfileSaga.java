@@ -12,7 +12,8 @@ import ru.bogdsvn.kafka_library.commands.ProcessedRecommendationCommand;
 import ru.bogdsvn.kafka_library.events.ProcessedLocationEvent;
 import ru.bogdsvn.kafka_library.events.ProcessedRecommendationEvent;
 import ru.bogdsvn.kafka_library.utils.Status;
-import ru.bogdsvn.profile.services.DeactivatedProfileService;
+import ru.bogdsvn.profile.services.BioService;
+import ru.bogdsvn.profile.store.entites.BioEntity;
 
 @Component
 @RequiredArgsConstructor
@@ -29,7 +30,7 @@ public class ProfileSaga {
 
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
-    private final DeactivatedProfileService deactivatedProfileService;
+    private final BioService bioService;
 
     public void startSaga(long id, Status status) {
         kafkaTemplate.send(
@@ -52,12 +53,12 @@ public class ProfileSaga {
                             .build()
             );
         } else {
-            deactivatedProfileService.deleteDeactivatedProfile(event.getId());
+            bioService.setStatus(event.getId(), Status.ACTIVATED);
         }
     }
 
     @KafkaHandler
     private void handleEvent(@Payload ProcessedRecommendationEvent event) {
-        deactivatedProfileService.setStatusFinished(event.getId());
+        bioService.setStatus(event.getId(), Status.DEACTIVATED);
     }
 }

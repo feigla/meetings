@@ -3,6 +3,7 @@ package ru.bogdsvn.profile.store.entites;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.domain.Persistable;
+import ru.bogdsvn.kafka_library.utils.Status;
 import ru.bogdsvn.profile.utils.Gender;
 
 import java.io.Serializable;
@@ -30,6 +31,10 @@ public class BioEntity implements Persistable<Long> {
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private Status status = Status.ACTIVATED;
 
     @Override
     public boolean isNew() {

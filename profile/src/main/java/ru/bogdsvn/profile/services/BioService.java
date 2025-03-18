@@ -3,13 +3,17 @@ package ru.bogdsvn.profile.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.bogdsvn.kafka_library.utils.Status;
 import ru.bogdsvn.profile.dtos.BioDto;
+import ru.bogdsvn.profile.dtos.ProfileStatusDto;
 import ru.bogdsvn.profile.errors.BadRequestException;
 import ru.bogdsvn.profile.errors.NotFoundException;
 import ru.bogdsvn.profile.factories.BioFactory;
 import ru.bogdsvn.profile.store.entites.BioEntity;
 import ru.bogdsvn.profile.store.repositories.BioRepository;
 import ru.bogdsvn.profile.utils.Gender;
+
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -59,5 +63,28 @@ public class BioService {
                         .findById(id)
                         .orElseThrow(() -> new NotFoundException("Информация о пользователе не заполнена"))
         );
+    }
+
+    public ProfileStatusDto getStatus(long id) {
+        return ProfileStatusDto.builder()
+                .status(
+                        bioRepository
+                                .getStatus(id)
+                                .orElse(null)
+                ).build();
+    }
+
+    @Transactional
+    public void setStatus(long id, Status status) {
+        bioRepository
+                .findById(id)
+                .ifPresent((p) -> {
+                    if (p.getStatus().equals(Status.DEACTIVATED) && status.equals(Status.DEACTIVATE_PROCESSED)) {
+                        throw new BadRequestException("Профиль выключен");
+                    } else if (p.getStatus().equals(Status.ACTIVATED) && status.equals(Status.ACTIVATE_PROCESSED)) {
+                        throw new BadRequestException("Профиль включен");
+                    }
+                    p.setStatus(status);
+                });
     }
 }

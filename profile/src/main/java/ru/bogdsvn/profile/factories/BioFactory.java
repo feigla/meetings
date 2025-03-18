@@ -10,6 +10,7 @@ public class BioFactory {
         return BioDto
                 .builder()
                 .id(entity.getId())
+                .status(entity.getStatus())
                 .age(entity.getAge())
                 .name(entity.getName())
                 .description(entity.getDescription())
