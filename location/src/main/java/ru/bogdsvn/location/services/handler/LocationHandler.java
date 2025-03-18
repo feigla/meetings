@@ -28,9 +28,9 @@ public class LocationHandler {
     @KafkaHandler
     public void handleCommand(@Payload ProcessedLocationCommand command) {
         if (command.getStatus().equals(Status.DEACTIVATE_PROCESSED)) {
-            locationService.deactivate(command.getId());
+            locationService.setIsActive(command.getId(), false);
         } else {
-            locationService.activate(command.getId());
+            locationService.setIsActive(command.getId(), true);
         }
 
         kafkaTemplate.send(

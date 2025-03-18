@@ -76,16 +76,9 @@ public class LocationService {
     }
 
     @Transactional
-    public void deactivate(long userId) {
+    public void setIsActive(long userId, boolean active) {
         profileRepository
                 .findById(userId)
-                .ifPresent(location -> location.setIsActive(false));
-    }
-
-    @Transactional
-    public void activate(long userId) {
-        profileRepository
-                .findById(userId)
-                .ifPresent(location -> location.setIsActive(true));
+                .ifPresent(location -> location.setIsActive(active));
     }
 }
