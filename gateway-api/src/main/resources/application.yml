@@ -12,9 +12,11 @@ spring:
         - id: profile-service
           uri: http://${PROFILE_SERVICE:localhost}:8081
           predicates:
-            - Path=/profiles/**, /profiles
+            - Path=/profiles/**, /profiles, /bios/**, /bios, /preferences/**, /preferences
           filters:
             - RewritePath=/profiles(?<segment>.*), /api/v1/profiles${segment}
+            - RewritePath=/bios(?<segment>.*), /api/v1/bios${segment}
+            - RewritePath=/preferences(?<segment>.*), /api/v1/preferences${segment}
             - name: AuthFilter
         - id: auth-service
           uri: http://${AUTH_SERVICE:localhost}:81
