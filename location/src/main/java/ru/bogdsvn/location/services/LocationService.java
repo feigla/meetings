@@ -28,7 +28,7 @@ public class LocationService {
     private final GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), 4326);
 
     @Transactional
-    public void saveLocation(LocationDto locationDto, long userId) {
+    public LocationDto saveLocation(LocationDto locationDto, long userId) {
         profileRepository
                 .findById(userId)
                 .ifPresent((profileEntity) -> {
@@ -42,10 +42,14 @@ public class LocationService {
                 )
         );
 
-        profileRepository.save(ProfileEntity.builder()
+        ProfileEntity profile = ProfileEntity.builder()
                 .id(userId)
                 .point(p)
-                .build());
+                .build();
+        profileRepository.save(profile);
+
+        locationDto.setId(userId);
+        return locationDto;
     }
 
     @Transactional

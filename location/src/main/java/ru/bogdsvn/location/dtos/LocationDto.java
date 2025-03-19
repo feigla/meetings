@@ -14,13 +14,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class LocationDto {
-    @JsonProperty("latitude")
+    @JsonProperty(value = "id", access = JsonProperty.Access.READ_ONLY)
+    private Long id;
+
+    @JsonProperty(value = "latitude")
     @Min(value = 0, message = "Широта имеет значения от 0 градусов до 90 градусов")
     @Max(value = 90, message = "Широта имеет значения от 0 градусов до 90 градусов")
     @NotNull
     private Double latitude;
 
-    @JsonProperty("longitude")
+    @JsonProperty(value = "longitude")
     @Min(value = 0, message = "Долгота имеет значения от 0 градусов до 180 градусов")
     @Max(value = 180, message = "Долгота имеет значения от 0 градусов до 180 градусов")
     @NotNull
