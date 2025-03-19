@@ -35,8 +35,8 @@ spring:
         - id: location-service
           uri: http://${LOCATION_SERVICE:localhost}:8083
           predicates:
-            - Path=/locations
+            - Path=/locations/**, /locations
           filters:
-            - RewritePath=/locations, /api/v1/locations
+            - RewritePath=/locations(?<segment>.*), /api/v1/locations/${segment}
             - name:
                 AuthFilter
