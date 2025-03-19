@@ -12,11 +12,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 public class RecommendationController {
-    private final static String GET_RECOMMENDATION = "/api/v1/recommendations";
+    private final static String GET_RECOMMENDATIONS = "/api/v1/recommendations";
 
     private final RecommendationService recommendationService;
 
-    @GetMapping(GET_RECOMMENDATION)
+    @GetMapping(GET_RECOMMENDATIONS)
     public List<ResultDto> getRecommendation(@RequestHeader("loggedId") Long id) {
         return recommendationService.getRecommendation(id);
     }
