@@ -124,7 +124,7 @@ make start
 - _Описание запроса:_
   - _name_ допускается от 1 до 45 символов, не null
   - _age_ может быть минимум 18 и максимум 80, не null
-  - _gender_ может быть MALE, либо FEMALE, не null
+  - _gender_ может быть MALE или FEMALE, не null
   - _description_ может быть максимально 255 символов, не null
 - _Ответ от сервера:_
   ```json
@@ -149,7 +149,7 @@ make start
 - _Описание запроса:_
   - _name_ допускается от 1 до 45 символов, не null
   - _age_ может быть минимум 18 и максимум 80, не null
-  - _gender_ может быть MALE, либо FEMALE, не null
+  - _gender_ может быть MALE или FEMALE, не null
   - _description_ может быть максимально 255 символов, не null
 - _Ответ от сервера:_
   - _HttpStatus.NO_CONTENT_
@@ -212,7 +212,7 @@ make start
 - _Описание запроса:_
   - _age_lower_bound_ и age_upper_bound могут быть минимум 18 и максимум 80, не null
   - _age_lower_bound_ < age_upper_bound
-  - _gender_ может быть MALE, либо FEMALE, не null
+  - _gender_ может быть MALE или FEMALE, не null
 - _Ответ от сервера:_
   ```json
   {
@@ -234,7 +234,7 @@ make start
 - _Описание запроса:_
   - _age_lower_bound_ и age_upper_bound могут быть минимум 18 и максимум 80, не null
   - _age_lower_bound_ < age_upper_bound
-  - _gender_ может быть MALE, либо FEMALE, не null
+  - _gender_ может быть MALE или FEMALE, не null
 - _Ответ от сервера:_
   - HttpStatus.NO_CONTENT
 ---
