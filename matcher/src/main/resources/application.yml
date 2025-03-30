@@ -1,0 +1,13 @@
+server:
+  port: 8084
+spring:
+  application:
+    name: matcher-service
+  datasource:
+    url: ${MATCHER_DB_URL:jdbc:postgresql://localhost:5432/matcher_database}
+    username: ${MATCHER_DB_USER:postgres}
+    password: ${MATCHER_DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
