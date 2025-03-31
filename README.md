@@ -313,3 +313,41 @@ make start
 - _Описание ответа от сервера:_
   - _dist_ определяет расстояние от конкретного пользователя до рекомендованного в метрах
   - Запрос может вернуть за раз максимум 5 пользователей
+---
+### Matcher-service
+**Лайкнуть пользователя с liked_id:**
+- _Запрос на сервер:_
+  ```sh
+  curl -X POST http://localhost:80/likes?liked_id=2 \
+    -H "Content-Type: application/json" \ 
+    -H "Authorization: Bearer token"
+  ```
+- _Ответ от сервера:_
+  ```json
+  {
+    "id": 1,
+    "liked_id": 2
+  }
+  ```
+---
+**Удаление лайка пользователю с liked_id:**
+- _Запрос на сервер:_
+  ```sh
+  curl -X DELETE http://localhost:80/likes/2 \
+    -H "Content-Type: application/json" \ 
+    -H "Authorization: Bearer token"
+  ```
+- _Ответ от сервера:_
+  - HttpStatus.NO_CONTENT
+---
+**Получение информации, поставил ли лайк пользователю с liked_id (True/False):**
+- _Запрос на сервер:_
+  ```sh
+  curl -X POST http://localhost:80/likes/2 \
+    -H "Content-Type: application/json" \ 
+    -H "Authorization: Bearer token"
+  ```
+- _Ответ от сервера:_
+  ```json
+  true
+  ```
