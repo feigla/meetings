@@ -14,8 +14,8 @@ public class LikeController {
     private final LikeService likeService;
 
     private static final String CREATE_LIKE = "/api/v1/likes";
-    private static final String DELETE_LIKE = "/api/v1/likes/{id}";
-    private static final String HAS_LIKE = "/api/v1/likes/{id}";
+    private static final String DELETE_LIKE = "/api/v1/likes/{liked_id}";
+    private static final String HAS_LIKE = "/api/v1/likes/{liked_id}";
 
     @PostMapping(CREATE_LIKE)
     public ResponseEntity<LikeDto> setLike(@NotNull @RequestParam("liked_id") Long likedId,
@@ -27,7 +27,7 @@ public class LikeController {
     }
 
     @GetMapping(HAS_LIKE)
-    public ResponseEntity<Boolean> hasLike(@NotNull @PathVariable("id") Long likedId,
+    public ResponseEntity<Boolean> hasLike(@NotNull @PathVariable("liked_id") Long likedId,
                                            @RequestHeader("loggedId") Long id
     ) {
         return ResponseEntity
@@ -36,7 +36,7 @@ public class LikeController {
     }
 
     @DeleteMapping(DELETE_LIKE)
-    public ResponseEntity<Void> deleteLike(@PathVariable("id") Long likedId,
+    public ResponseEntity<Void> deleteLike(@PathVariable("liked_id") Long likedId,
                                            @RequestHeader("loggedId") Long id
     ) {
         likeService.deleteLike(id, likedId);
