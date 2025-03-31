@@ -40,3 +40,11 @@ spring:
             - RewritePath=/locations(?<segment>.*), /api/v1/locations/${segment}
             - name:
                 AuthFilter
+        - id: matcher-service
+          uri: http://${MATCHER_SERVICE:localhost}:8084
+          predicates:
+            - Path=/likes**, /likes, /likes/**
+          filters:
+            - RewritePath=/likes(?<segment>.*), /api/v1/likes${segment}
+            - name:
+                AuthFilter
