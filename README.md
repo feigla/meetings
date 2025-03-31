@@ -343,7 +343,7 @@ make start
 **Получение информации, поставил ли лайк пользователю с liked_id (True/False):**
 - _Запрос на сервер:_
   ```sh
-  curl -X POST http://localhost:80/likes/2 \
+  curl -X GET http://localhost:80/likes/2 \
     -H "Content-Type: application/json" \ 
     -H "Authorization: Bearer token"
   ```
