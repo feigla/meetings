@@ -1,4 +1,4 @@
-package ru.bogdsvn.profile.errors;
+package ru.bogdsvn.matcher.errors;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
