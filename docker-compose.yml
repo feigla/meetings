@@ -116,6 +116,32 @@ services:
       POSTGRES_DB: ${RECOMMENDATION_DB_DATABASE}
     restart: always
 
+  matcher-service:
+    container_name: matcher-service
+    build:
+      context: ./
+      dockerfile: ./matcher/Dockerfile
+    ports:
+      - 8084:8084
+    restart: on-failure
+    env_file:
+      - .env
+    depends_on:
+      - matcher-db
+
+  matcher-db:
+    container_name: matcher-db
+    image: postgres:16
+    env_file:
+      - .env
+    volumes:
+      - matcher-postgres-db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${MATCHER_DB_USER}
+      POSTGRES_PASSWORD: ${MATCHER_DB_PASSWORD}
+      POSTGRES_DB: ${MATCHER_DB_DATABASE}
+    restart: always
+
   zookeeper:
     image: confluentinc/cp-zookeeper:7.8.0
     environment:
@@ -144,3 +170,4 @@ volumes:
   profile-postgres-db:
   location-postgres-db:
   recommendation-postgres-db:
+  matcher-postgres-db:
