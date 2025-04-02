@@ -3,6 +3,7 @@ package ru.bogdsvn.auth.errors;
 import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -10,21 +11,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(UnauthorizedException.class)
-    public ResponseEntity<ErrorDto> handleUnauthorisedException(Exception ex) {
-        return ResponseEntity
-                .status(HttpStatus.UNAUTHORIZED)
-                .body(ErrorDto
-                        .builder()
-                        .error(HttpStatus.UNAUTHORIZED.getReasonPhrase())
-                        .message(ex.getMessage())
-                        .build()
-                );
-    }
-
     @ExceptionHandler({
             AccessDeniedException.class,
-            UsernameExistException.class,
             JwtException.class
     })
     public ResponseEntity<ErrorDto> handleForbiddenException(Exception ex) {
@@ -38,7 +26,10 @@ public class GlobalExceptionHandler {
                 );
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ExceptionHandler({
+            MethodArgumentNotValidException.class,
+            BadRequestException.class,
+    })
     public ResponseEntity<ErrorDto> handleValidationException(MethodArgumentNotValidException ex) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)

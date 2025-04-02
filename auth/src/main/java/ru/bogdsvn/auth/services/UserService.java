@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.bogdsvn.auth.errors.UsernameExistException;
+import ru.bogdsvn.auth.errors.BadRequestException;
 import ru.bogdsvn.auth.store.entities.UserEntity;
 import ru.bogdsvn.auth.store.repositories.UserRepository;
 
@@ -17,7 +17,7 @@ public class UserService {
     @Transactional
     public void createUser(UserEntity user) {
         if (userRepository.existsByUsername(user.getUsername())) {
-            throw new UsernameExistException("Username already exists");
+            throw new BadRequestException("Пользователь существует");
         }
         userRepository.save(user);
     }

@@ -2,6 +2,8 @@ package ru.bogdsvn.auth.services;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -10,10 +12,10 @@ import org.springframework.stereotype.Service;
 import ru.bogdsvn.auth.dtos.JwtAuthResponseDto;
 import ru.bogdsvn.auth.dtos.SignInDto;
 import ru.bogdsvn.auth.dtos.SignUpDto;
-import ru.bogdsvn.auth.errors.AccessDeniedException;
 import ru.bogdsvn.auth.store.entities.UserEntity;
 import ru.bogdsvn.auth.utils.Role;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -50,19 +52,21 @@ public class AuthService {
      * @return token if password is correct otherwise null
      */
     public JwtAuthResponseDto signIn(SignInDto request) {
-        Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                request.getUsername(),
-                request.getPassword()
-        ));
+        try {
+            Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                    request.getUsername(),
+                    request.getPassword()
+            ));
+            if (auth.isAuthenticated()) {
+                var user = userService
+                        .userDetailsService()
+                        .loadUserByUsername(request.getUsername());
 
-        if (auth.isAuthenticated()) {
-            var user = userService
-                    .userDetailsService()
-                    .loadUserByUsername(request.getUsername());
-
-            var jwt = jwtService.generateToken(user);
-            return JwtAuthResponseDto.builder().token(jwt).build();
+                var jwt = jwtService.generateToken(user);
+                return JwtAuthResponseDto.builder().token(jwt).build();
+            }
+        } catch (Exception e) {
         }
-        throw new AccessDeniedException("Access denied");
+        throw new AccessDeniedException("Доступ запрещен");
     }
 }
