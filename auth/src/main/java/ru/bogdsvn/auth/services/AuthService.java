@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import ru.bogdsvn.auth.dtos.JwtAuthResponseDto;
 import ru.bogdsvn.auth.dtos.SignInDto;
 import ru.bogdsvn.auth.dtos.SignUpDto;
+import ru.bogdsvn.auth.dtos.UpgradedPasswordDto;
 import ru.bogdsvn.auth.errors.BadRequestException;
 import ru.bogdsvn.auth.store.entities.UserEntity;
 import ru.bogdsvn.auth.utils.Role;
@@ -83,16 +84,21 @@ public class AuthService {
      * Обновления токенов
      * @param accessToken
      * @param refreshToken
-     * @return JwtAuthResponseDto, в котором хранятся refresh и access токены
+     * @return JwtAuthResponseDto, в котором хранятся новые refresh и access токены
      */
     public JwtAuthResponseDto refresh(String accessToken, String refreshToken) {
         if (!jwtService.isAccessTokenValid(accessToken) &&
                 jwtService.isRefreshTokenValid(refreshToken)) {
             String username = jwtService.extractUsernameFromRefreshToken(refreshToken);
+            long version = jwtService.extractVersionFromRefreshToken(refreshToken);
 
             var user = userService
                     .userDetailsService()
                     .loadUserByUsername(username);
+
+            if (version != ((UserEntity) user).getVersion()) {
+                throw new AccessDeniedException("Допуп запрещен");
+            }
 
             String newRefreshToken = jwtService.generateRefreshToken(user);
             String newAccessToken = jwtService.generateAccessToken(user);
@@ -104,4 +110,37 @@ public class AuthService {
         }
         throw new BadRequestException("Токены не валидны");
     }
+
+    /**
+     * Смена пароля пользователю
+     *
+     * @param request хранится новый пароль пользователя
+     * @return token if password is correct otherwise null
+     */
+    public JwtAuthResponseDto resetPassword(UpgradedPasswordDto request) {
+        try {
+            Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                    request.getUsername(),
+                    request.getOldPassword()
+            ));
+            if (auth.isAuthenticated()) {
+                var user = userService
+                        .userDetailsService()
+                        .loadUserByUsername(request.getUsername());
+
+                userService.reset(request.getUsername(), passwordEncoder.encode(request.getNewPassword()));
+
+                String refreshToken = jwtService.generateRefreshToken(user);
+                String accessToken = jwtService.generateAccessToken(user);
+
+                return JwtAuthResponseDto.builder()
+                        .accessToken(accessToken)
+                        .refreshToken(refreshToken)
+                        .build();
+            }
+        } catch (Exception e) {
+        }
+        throw new AccessDeniedException("Доступ запрещен");
+    }
+
 }

@@ -22,6 +22,15 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @Transactional
+    public void reset(String username, String password) {
+        UserEntity user = userRepository
+                .findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
+        user.setVersion(user.getVersion() + 1);
+        user.setPassword(password);
+    }
+
     public UserEntity getUserByUsername(String username) {
         return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Username not found"));
     }
