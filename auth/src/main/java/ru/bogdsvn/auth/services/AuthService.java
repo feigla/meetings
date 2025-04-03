@@ -84,16 +84,21 @@ public class AuthService {
      * Обновления токенов
      * @param accessToken
      * @param refreshToken
-     * @return JwtAuthResponseDto, в котором хранятся refresh и access токены
+     * @return JwtAuthResponseDto, в котором хранятся новые refresh и access токены
      */
     public JwtAuthResponseDto refresh(String accessToken, String refreshToken) {
         if (!jwtService.isAccessTokenValid(accessToken) &&
                 jwtService.isRefreshTokenValid(refreshToken)) {
             String username = jwtService.extractUsernameFromRefreshToken(refreshToken);
+            long version = jwtService.extractVersionFromRefreshToken(refreshToken);
 
             var user = userService
                     .userDetailsService()
                     .loadUserByUsername(username);
+
+            if (version != ((UserEntity) user).getVersion()) {
+                throw new AccessDeniedException("Допуп запрещен");
+            }
 
             String newRefreshToken = jwtService.generateRefreshToken(user);
             String newAccessToken = jwtService.generateAccessToken(user);
@@ -109,7 +114,7 @@ public class AuthService {
     /**
      * Смена пароля пользователю
      *
-     * @param request данные пользователя
+     * @param request хранится новый пароль пользователя
      * @return token if password is correct otherwise null
      */
     public JwtAuthResponseDto resetPassword(UpgradedPasswordDto request) {

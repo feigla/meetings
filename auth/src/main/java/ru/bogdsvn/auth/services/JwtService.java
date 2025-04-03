@@ -168,4 +168,14 @@ public class JwtService {
     public String extractUsernameFromRefreshToken(String token) {
         return String.valueOf(extractClaim(token, Claims::getSubject, refreshKey));
     }
+
+    /**
+     * Извлечение version пользователя из refresh токена
+     *
+     * @param token токен
+     * @return version
+     */
+    public Long extractVersionFromRefreshToken(String token) {
+        return extractClaim(token, (Claims cl) -> (Long)cl.get("version"), refreshKey);
+    }
 }
