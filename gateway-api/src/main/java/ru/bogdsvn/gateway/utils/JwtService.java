@@ -1,6 +1,7 @@
 package ru.bogdsvn.gateway.utils;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -65,22 +66,26 @@ public class JwtService {
      * @return данные
      */
     private Claims extractAllClaims(String token, String key) {
-        return Jwts
+        try {
+            return Jwts
                     .parser()
                     .verifyWith(getSigningKey(key))
                     .build()
                     .parseSignedClaims(token)
                     .getPayload();
+        } catch (ExpiredJwtException e) {
+            return e.getClaims();
+        }
     }
 
-    /**
-     * Извлечение данных из токена
-     *
-     * @param token           токен
-     * @param claimsResolvers функция извлечения данных
-     * @param <T>             тип данных
-     * @return данные
-     */
+        /**
+         * Извлечение данных из токена
+         *
+         * @param token           токен
+         * @param claimsResolvers функция извлечения данных
+         * @param <T>             тип данных
+         * @return данные
+         */
     private <T> T extractClaim(String token, Function<Claims, T> claimsResolvers, String key) {
         final Claims claims = extractAllClaims(token, key);
         return claimsResolvers.apply(claims);

@@ -1,6 +1,7 @@
 package ru.bogdsvn.auth.services;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -133,12 +134,16 @@ public class JwtService {
      * @return данные
      */
     private Claims extractAllClaims(String token, String key) {
-        return Jwts
-                .parser()
-                .verifyWith(getSigningKey(key))
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
+        try {
+            return Jwts
+                    .parser()
+                    .verifyWith(getSigningKey(key))
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
+        } catch (ExpiredJwtException e) {
+            return e.getClaims();
+        }
     }
 
     /**
