@@ -32,6 +32,10 @@ public class UserEntity implements UserDetails {
     @Column(name = "role", nullable = false)
     private Role role;
 
+    @Builder.Default
+    @Column(name = "version", nullable = false)
+    private Long version = Long.MIN_VALUE;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
