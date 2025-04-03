@@ -13,19 +13,30 @@ import java.util.function.Function;
 
 @Service
 public class JwtService {
-    @Value("${token.signing.key}")
-    private String key;
+    @Value("${token.signing.access-token}")
+    private String accessKey;
+    @Value("${token.signing.refresh-token}")
+    private String refreshKey;
 
     /**
-     * Проверка токена на валидность
+     * Проверка refresh токена на валидность
      *
      * @param token       токен
      * @return true, если токен валиден
      */
-    public boolean isTokenValid(String token) {
-        return !isTokenExpired(token);
+    public boolean isRefreshTokenValid(String token) {
+        return !isTokenExpired(token, refreshKey);
     }
 
+    /**
+     * Проверка access токена на валидность
+     *
+     * @param token       токен
+     * @return true, если токен валиден
+     */
+    public boolean isAccessTokenValid(String token) {
+        return !isTokenExpired(token, accessKey);
+    }
 
     /**
      * Проверка токена на просроченность
@@ -33,8 +44,8 @@ public class JwtService {
      * @param token токен
      * @return true, если токен просрочен
      */
-    private boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());
+    private boolean isTokenExpired(String token, String key) {
+        return extractExpiration(token, key).before(new Date());
     }
 
     /**
@@ -43,8 +54,8 @@ public class JwtService {
      * @param token токен
      * @return дата истечения
      */
-    private Date extractExpiration(String token) {
-        return extractClaim(token, Claims::getExpiration);
+    private Date extractExpiration(String token, String key) {
+        return extractClaim(token, Claims::getExpiration, key);
     }
 
     /**
@@ -53,10 +64,10 @@ public class JwtService {
      * @param token токен
      * @return данные
      */
-    private Claims extractAllClaims(String token) {
+    private Claims extractAllClaims(String token, String key) {
         return Jwts
                     .parser()
-                    .verifyWith(getSigningKey())
+                    .verifyWith(getSigningKey(key))
                     .build()
                     .parseSignedClaims(token)
                     .getPayload();
@@ -70,29 +81,19 @@ public class JwtService {
      * @param <T>             тип данных
      * @return данные
      */
-    private <T> T extractClaim(String token, Function<Claims, T> claimsResolvers) {
-        final Claims claims = extractAllClaims(token);
+    private <T> T extractClaim(String token, Function<Claims, T> claimsResolvers, String key) {
+        final Claims claims = extractAllClaims(token, key);
         return claimsResolvers.apply(claims);
     }
 
     /**
-     * Извлечение имени пользователя из токена
-     *
-     * @param token токен
-     * @return имя пользователя
-     */
-    public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
-    }
-
-    /**
-     * Извлечение unique пользователя из токена
+     * Извлечение unique пользователя из access токена
      *
      * @param token токен
      * @return id
      */
-    public Long extractId(String token) {
-        return Long.valueOf(extractClaim(token, Claims::getId));
+    public Long extractIdFromAccessToken(String token) {
+        return Long.valueOf(extractClaim(token, Claims::getId, accessKey));
     }
 
 
@@ -101,7 +102,7 @@ public class JwtService {
      *
      * @return ключ
      */
-    private SecretKey getSigningKey() {
+    private SecretKey getSigningKey(String key) {
         byte[] keyBytes = Decoders.BASE64.decode(key);
         return Keys.hmacShaKeyFor(keyBytes);
     }
