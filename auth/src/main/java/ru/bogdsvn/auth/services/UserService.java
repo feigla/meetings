@@ -17,7 +17,7 @@ public class UserService {
     @Transactional
     public void createUser(UserEntity user) {
         if (userRepository.existsByUsername(user.getUsername())) {
-            throw new BadRequestException("Пользователь существует");
+            throw new BadRequestException("Пользователь с таким именем существует");
         }
         userRepository.save(user);
     }

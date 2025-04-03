@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import ru.bogdsvn.auth.dtos.JwtAuthResponseDto;
 import ru.bogdsvn.auth.dtos.SignInDto;
 import ru.bogdsvn.auth.dtos.SignUpDto;
+import ru.bogdsvn.auth.errors.BadRequestException;
 import ru.bogdsvn.auth.store.entities.UserEntity;
 import ru.bogdsvn.auth.utils.Role;
 
@@ -31,7 +32,6 @@ public class AuthService {
      * @return токен
      */
     public JwtAuthResponseDto signUp(SignUpDto request) {
-
         var user = UserEntity.builder()
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
@@ -40,9 +40,13 @@ public class AuthService {
 
         userService.createUser(user);
 
-        String jwt = jwtService.generateToken(user);
+        String refreshToken = jwtService.generateRefreshToken(user);
+        String accessToken = jwtService.generateAccessToken(user);
 
-        return JwtAuthResponseDto.builder().token(jwt).build();
+        return JwtAuthResponseDto.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
     }
 
     /**
@@ -62,11 +66,42 @@ public class AuthService {
                         .userDetailsService()
                         .loadUserByUsername(request.getUsername());
 
-                var jwt = jwtService.generateToken(user);
-                return JwtAuthResponseDto.builder().token(jwt).build();
+                String refreshToken = jwtService.generateRefreshToken(user);
+                String accessToken = jwtService.generateAccessToken(user);
+
+                return JwtAuthResponseDto.builder()
+                        .accessToken(accessToken)
+                        .refreshToken(refreshToken)
+                        .build();
             }
         } catch (Exception e) {
         }
         throw new AccessDeniedException("Доступ запрещен");
+    }
+
+    /**
+     * Обновления токенов
+     * @param accessToken
+     * @param refreshToken
+     * @return JwtAuthResponseDto, в котором хранятся refresh и access токены
+     */
+    public JwtAuthResponseDto refresh(String accessToken, String refreshToken) {
+        if (!jwtService.isAccessTokenValid(accessToken) &&
+                jwtService.isRefreshTokenValid(refreshToken)) {
+            String username = jwtService.extractUsernameFromRefreshToken(refreshToken);
+
+            var user = userService
+                    .userDetailsService()
+                    .loadUserByUsername(username);
+
+            String newRefreshToken = jwtService.generateRefreshToken(user);
+            String newAccessToken = jwtService.generateAccessToken(user);
+
+            return JwtAuthResponseDto.builder()
+                    .accessToken(newAccessToken)
+                    .refreshToken(newRefreshToken)
+                    .build();
+        }
+        throw new BadRequestException("Токены не валидны");
     }
 }
