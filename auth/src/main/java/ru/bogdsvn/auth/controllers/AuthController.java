@@ -14,7 +14,7 @@ import ru.bogdsvn.auth.services.AuthService;
 public class AuthController {
     private final static String SIGN_UP = "/api/v1/auth/sign-up";
     private final static String SIGN_IN = "/api/v1/auth/sign-in";
-    private final static String REFRESH_TOKEN = "/api/v1/auth/refresh-token";
+    private final static String REFRESH_TOKEN = "/api/v1/auth/refresh-tokens";
 
     private final AuthService authenticationService;
 
