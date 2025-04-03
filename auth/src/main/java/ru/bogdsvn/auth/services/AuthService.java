@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import ru.bogdsvn.auth.dtos.JwtAuthResponseDto;
 import ru.bogdsvn.auth.dtos.SignInDto;
 import ru.bogdsvn.auth.dtos.SignUpDto;
+import ru.bogdsvn.auth.dtos.UpgradedPasswordDto;
 import ru.bogdsvn.auth.errors.BadRequestException;
 import ru.bogdsvn.auth.store.entities.UserEntity;
 import ru.bogdsvn.auth.utils.Role;
@@ -104,4 +105,37 @@ public class AuthService {
         }
         throw new BadRequestException("Токены не валидны");
     }
+
+    /**
+     * Смена пароля пользователю
+     *
+     * @param request данные пользователя
+     * @return token if password is correct otherwise null
+     */
+    public JwtAuthResponseDto resetPassword(UpgradedPasswordDto request) {
+        try {
+            Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                    request.getUsername(),
+                    request.getOldPassword()
+            ));
+            if (auth.isAuthenticated()) {
+                var user = userService
+                        .userDetailsService()
+                        .loadUserByUsername(request.getUsername());
+
+                userService.reset(request.getUsername(), passwordEncoder.encode(request.getNewPassword()));
+
+                String refreshToken = jwtService.generateRefreshToken(user);
+                String accessToken = jwtService.generateAccessToken(user);
+
+                return JwtAuthResponseDto.builder()
+                        .accessToken(accessToken)
+                        .refreshToken(refreshToken)
+                        .build();
+            }
+        } catch (Exception e) {
+        }
+        throw new AccessDeniedException("Доступ запрещен");
+    }
+
 }

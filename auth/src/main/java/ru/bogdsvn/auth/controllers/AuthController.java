@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.bogdsvn.auth.dtos.JwtAuthResponseDto;
 import ru.bogdsvn.auth.dtos.SignInDto;
 import ru.bogdsvn.auth.dtos.SignUpDto;
+import ru.bogdsvn.auth.dtos.UpgradedPasswordDto;
 import ru.bogdsvn.auth.errors.BadRequestException;
 import ru.bogdsvn.auth.services.AuthService;
 
@@ -15,6 +16,7 @@ public class AuthController {
     private final static String SIGN_UP = "/api/v1/auth/sign-up";
     private final static String SIGN_IN = "/api/v1/auth/sign-in";
     private final static String REFRESH_TOKEN = "/api/v1/auth/refresh-tokens";
+    private final static String RESET_PASSWORD = "/api/v1/auth/reset-password";
 
     private final AuthService authenticationService;
 
@@ -35,5 +37,10 @@ public class AuthController {
             throw new BadRequestException("Токены не валидны");
         }
         return authenticationService.refresh(jwt.substring(7), refreshToken);
+    }
+
+    @PostMapping(RESET_PASSWORD)
+    public JwtAuthResponseDto resetPassword(@RequestBody @Valid UpgradedPasswordDto request) {
+        return authenticationService.resetPassword(request);
     }
 }
