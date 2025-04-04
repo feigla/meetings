@@ -165,6 +165,12 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
 
+  redis-service:
+    container_name: redis-service
+    image: redis:7.4.2
+    ports:
+      - 6379:6379
+
 volumes:
   auth-postgres-db:
   profile-postgres-db:

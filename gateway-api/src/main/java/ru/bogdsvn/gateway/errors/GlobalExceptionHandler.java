@@ -21,7 +21,10 @@ public class GlobalExceptionHandler {
                 );
     }
 
-    @ExceptionHandler(JwtException.class)
+    @ExceptionHandler({
+            JwtException.class,
+            AccessDeniedException.class
+    })
     public ResponseEntity<ErrorDto> handleForbiddenException(Exception ex) {
         return ResponseEntity
                 .status(HttpStatus.FORBIDDEN)

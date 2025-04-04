@@ -104,6 +104,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <version>3.3.2</version>
         </dependency>
+
+        <dependency>
+            <groupId>ru.bogdsvn</groupId>
+            <artifactId>redis-library</artifactId>
+            <version>0.0.1</version>
+        </dependency>
     </dependencies>
 
     <build>

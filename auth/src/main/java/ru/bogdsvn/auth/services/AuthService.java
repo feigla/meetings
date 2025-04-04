@@ -16,6 +16,7 @@ import ru.bogdsvn.auth.dtos.UpgradedPasswordDto;
 import ru.bogdsvn.auth.errors.BadRequestException;
 import ru.bogdsvn.auth.store.entities.UserEntity;
 import ru.bogdsvn.auth.utils.Role;
+import ru.bogdsvn.redis.services.RedisJwtService;
 
 @Slf4j
 @Service
@@ -25,6 +26,8 @@ public class AuthService {
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+
+    private final RedisJwtService redisJwtService;
 
     /**
      * Регистрация пользователя
@@ -90,6 +93,9 @@ public class AuthService {
         if (!jwtService.isAccessTokenValid(accessToken) &&
                 jwtService.isRefreshTokenValid(refreshToken)) {
             String username = jwtService.extractUsernameFromRefreshToken(refreshToken);
+            if (redisJwtService.exist(refreshToken)) {
+                throw new AccessDeniedException("Допуп запрещен");
+            }
             long version = jwtService.extractVersionFromRefreshToken(refreshToken);
 
             var user = userService
@@ -143,4 +149,14 @@ public class AuthService {
         throw new AccessDeniedException("Доступ запрещен");
     }
 
+    /**
+     * добавление токена в черный список
+     * @param refreshToken
+     */
+    public void addTokenInBlackList(String refreshToken) {
+        if (refreshToken == null || !jwtService.isRefreshTokenValid(refreshToken)) {
+            throw new AccessDeniedException("Токен не валиден");
+        }
+        redisJwtService.add(refreshToken);
+    }
 }
