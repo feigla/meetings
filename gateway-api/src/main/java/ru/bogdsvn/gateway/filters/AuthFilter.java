@@ -5,9 +5,11 @@ import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpCookie;
 import org.springframework.stereotype.Component;
+import ru.bogdsvn.gateway.errors.AccessDeniedException;
 import ru.bogdsvn.gateway.errors.AuthorizationException;
 import ru.bogdsvn.gateway.errors.BadRequestException;
 import ru.bogdsvn.gateway.utils.JwtService;
+import ru.bogdsvn.redis.services.RedisJwtService;
 
 import java.util.List;
 
@@ -15,10 +17,12 @@ import java.util.List;
 @Component
 public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> {
     private final JwtService jwtService;
+    private final RedisJwtService redisJwtService;
 
-    public AuthFilter(JwtService jwtService) {
+    public AuthFilter(JwtService jwtService, RedisJwtService redisJwtService) {
         super(Config.class);
         this.jwtService = jwtService;
+        this.redisJwtService = redisJwtService;
     }
 
     @Override
@@ -32,7 +36,7 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
             }
 
             if (refreshToken == null) {
-                throw new BadRequestException("Refresh token is empty");
+                throw new BadRequestException("Refresh токен передан неверно");
             }
 
             String jwt = exchange.getRequest().getHeaders().getFirst("Authorization");
@@ -43,12 +47,12 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
 
             String accessToken = jwt.substring(7);
 
-            if (!jwtService.isAccessTokenValid(accessToken) && jwtService.isRefreshTokenValid(refreshToken)) {
-                throw new AuthorizationException("Истекло время хранения access токена");
+            if (redisJwtService.exist(refreshToken)) {
+                throw new AccessDeniedException("Доступ запрещен");
             }
 
-            if (!jwtService.isRefreshTokenValid(refreshToken)) {
-                throw new AuthorizationException("Refresh токен не валиден");
+            if (!jwtService.isAccessTokenValid(accessToken)) {
+                throw new AuthorizationException("Истекло время хранения access токена");
             }
 
             long id = jwtService.extractIdFromAccessToken(accessToken);
