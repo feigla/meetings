@@ -2,6 +2,7 @@ package ru.bogdsvn.auth.controllers;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.bogdsvn.auth.dtos.JwtAuthResponseDto;
 import ru.bogdsvn.auth.dtos.SignInDto;
@@ -17,6 +18,7 @@ public class AuthController {
     private final static String SIGN_IN = "/api/v1/auth/sign-in";
     private final static String REFRESH_TOKEN = "/api/v1/auth/refresh-tokens";
     private final static String RESET_PASSWORD = "/api/v1/auth/reset-password";
+    private final static String LOG_OUT = "/api/v1/auth/logout";
 
     private final AuthService authenticationService;
 
@@ -42,5 +44,11 @@ public class AuthController {
     @PostMapping(RESET_PASSWORD)
     public JwtAuthResponseDto resetPassword(@RequestBody @Valid UpgradedPasswordDto request) {
         return authenticationService.resetPassword(request);
+    }
+
+    @PostMapping(LOG_OUT)
+    public ResponseEntity<Void> logout(@CookieValue("refresh_token") String refreshToken) {
+        authenticationService.addTokenInBlackList(refreshToken);
+        return ResponseEntity.noContent().build();
     }
 }
