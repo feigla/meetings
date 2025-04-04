@@ -1,0 +1,3 @@
+redis:
+  host: ${REDIS_SERVICE:localhost}
+  port: ${REDIS_PORT:6379}
