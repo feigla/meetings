@@ -6,6 +6,7 @@ start:
 	sudo docker-compose up
 
 mvn-build:
+	mvn -f redis-library/ clean install
 	mvn -f kafka-library/ clean install
 	mvn -f proto/ clean install
 	mvn -f matcher/ clean package
