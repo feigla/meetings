@@ -6,9 +6,10 @@
 
 - **Язык программирования:** Java 21
 - **Фреймворки и библиотеки:** Spring Boot, Spring Security, Hibernate/JPA
-- **Базы данных:** PostgreSQL, PostGIS, H2
+- **Базы данных:** PostgreSQL, PostGIS, H2, Redis
 - **Тестирование:** JUnit, Integration Tests
 - **Коммуникация между микросервисами:** gRPC, Rest, Kafka
+- **Развертывание проекта:** Docker, Makefile
 
 ## Архитектура приложения
 
@@ -25,17 +26,25 @@
 
 1. **proto** – для хранения `.proto` файлов. Эти файлы компилируются в Java-код и используются в микросервисах для обеспечения gRPC-коммуникации между ними.
 2. **kafka-library** – для сериализации и десериализации POJO объектов при обмене сообщениями через **Kafka**.
+3. **redis-library** - для хранения конфигураций, чтобы подключиться к redis, 
+а также кастомный сервис для добавления refresh токена в черный список с ttl,
+когда пользователь выходит из аккаунта.
 
 ## Описание микросервисов
 
 ### 1. Gateway API
-**gateway-api** — это центральная точка входа для всех запросов. Он перенаправляет их на соответствующие микросервисы и выполняет проверку **JWT-токенов** на валидность перед обработкой запросов.
+**gateway-api** — это центральная точка входа для всех запросов. 
+Он перенаправляет их на соответствующие микросервисы, выполняет проверку **access токена** на валидность 
+и проверяет, что **refresh токен** не находится в черном списке.
 
 ### 2. Auth Service
 **auth-service** отвечает за:
 - Регистрацию пользователей
 - Аутентификацию
-- Выдачу JWT-токенов
+- Выдачу refresh и access токенов
+- Смена пароля
+- Обновления токенов
+- Выход пользователя из аккаунта, refresh токен добавляется в черный список.
 
 ### 3. Location Service
 **location-service** отвечает за:
@@ -46,7 +55,7 @@
 **profile-service** используется для:
 - Хранения профилей пользователей
 - Хранения интересов пользователя
-- Активации и Деактивации пользователя.
+- Активации и Деактивации пользователя
 
 ### 5. Recommendation Service
 **recommendation-service** формирует список рекомендованных пользователей на основе:
@@ -67,7 +76,8 @@
 
 В файле .env предоставлен возможный вариант названий переменных. 
 
-Рекомендуется изменить AUTH_TOKEN, DB_PASSWORDS, DB_USERS.
+Рекомендуется изменить AUTH_TOKEN, DB_PASSWORDS, DB_USERS. 
+Также всe переменные, которые должны быть засекречены.
 
 
 ### Сборка приложения
@@ -96,7 +106,8 @@ make start
 - _Ответ от сервера:_
   ```json
   {
-    "token":"token"
+    "refresh_token":"refresh_token",
+    "access_token": "access_token"
   }
   ```
 ---
@@ -113,9 +124,57 @@ make start
 - _Ответ от сервера:_
   ```json
   {
-    "token":"token"
+    "refresh_token":"refresh_token",
+    "access_token": "access_token"
   }
   ```
+---
+**Обновление токен пользователю:**
+- _Запрос на сервер:_
+  ```sh
+  curl -X POST http://localhost:80/auth/refresh-tokens \
+    -H "Content-Type: application/json" \
+    -H "Cookie: refresh_token=refresh_token" \
+    -H "Authorization: Bearer access_token"
+  ```
+- _Описание запроса:_
+  - Обновить токен можно только в том случае, если _access_token_ не валиден.
+- _Ответ от сервера:_
+  ```json
+  {
+    "refresh_token":"refresh_token",
+    "access_token": "access_token"
+  }
+  ```
+---
+**Обновление пароля:**
+- _Запрос на сервер:_
+  ```sh
+  curl -X POST http://localhost:80/auth/reset-password \
+    -H "Content-Type: application/json" \
+    -d '{"username":"username", "old_password":"old_password", "new_password":"new_password"}'
+  ```
+- _Описание запроса:_
+  - _username_ допускается от 5 до 20 символов, не null
+  - _old_password_ допускается от 8 до 255 символов, не null
+  - _new_password_ допускается от 8 до 255 символов, не null
+- _Ответ от сервера:_
+  ```json
+  {
+    "refresh_token":"refresh_token",
+    "access_token": "access_token"
+  }
+  ```
+---
+**Выход пользователя из аккаунта:**
+- _Запрос на сервер:_
+  ```sh
+  curl -X POST http://localhost:80/auth/logout \
+    -H "Content-Type: application/json" \
+    -H "Cookie: refresh_token=refresh_token"
+  ```
+- _Ответ от сервера:_
+  - HttpStatus.NO_CONTENT
 ---
 ### Profile-service
 **Заполнение информации о себе:**
@@ -123,6 +182,7 @@ make start
   ```sh
   curl -X POST http://localhost:80/bios \
     -H "Content-Type: application/json" \ 
+    -H "Cookie: refresh_token=refresh_token" \
     -H "Authorization: Bearer token" \
     -d '{"name":"name", "age":18, "description":"description", "gender":"gender"}'
   ```
@@ -148,6 +208,7 @@ make start
   ```sh
   curl -X PUT http://localhost:80/bios/{id} \
     -H "Content-Type: application/json" \ 
+    -H "Cookie: refresh_token=refresh_token" \
     -H "Authorization: Bearer token" \
     -d '{"name":"name", "age":18, "description":"description", "gender":"gender"}'
   ```
@@ -164,6 +225,7 @@ make start
   ```sh
   curl -X GET http://localhost:80/bios/{id} \
     -H "Content-Type: application/json" \ 
+    -H "Cookie: refresh_token=refresh_token" \
     -H "Authorization: Bearer token"
   ```
 - _Ответ от сервера:_
@@ -183,6 +245,7 @@ make start
   ```sh
   curl -X PUT http://localhost:80/bios/{id}/status?active=false \
     -H "Content-Type: application/json" \ 
+    -H "Cookie: refresh_token=refresh_token" \
     -H "Authorization: Bearer token"
   ```
 - _Ответ от сервера:_
@@ -197,6 +260,7 @@ make start
   ```sh
   curl -X GET http://localhost:80/bios/{id}/status \
     -H "Content-Type: application/json" \ 
+    -H "Cookie: refresh_token=refresh_token" \
     -H "Authorization: Bearer token"
   ```
 - _Ответ от сервера:_
@@ -211,6 +275,7 @@ make start
   ```sh
   curl -X POST http://localhost:80/preferences \
     -H "Content-Type: application/json" \ 
+    -H "Cookie: refresh_token=refresh_token" \
     -H "Authorization: Bearer token" \
     -d '{"age_lower_bound":18, "age_upper_bound":30, "gender":"gender"}'
   ```
@@ -233,6 +298,7 @@ make start
   ```sh
   curl -X PUT http://localhost:80/preferences/{id} \
     -H "Content-Type: application/json" \ 
+    -H "Cookie: refresh_token=refresh_token" \
     -H "Authorization: Bearer token" \
     -d '{"age_lower_bound":18, "age_upper_bound":30, "gender":"gender"}'
   ```
@@ -248,6 +314,7 @@ make start
   ```sh
   curl -X GET http://localhost:80/preferences/{id} \
     -H "Content-Type: application/json" \ 
+    -H "Cookie: refresh_token=refresh_token" \
     -H "Authorization: Bearer token"
   ```
 - _Ответ от сервера:_
@@ -266,6 +333,7 @@ make start
   ```sh
   curl -X POST http://localhost:80/locations \
     -H "Content-Type: application/json" \ 
+    -H "Cookie: refresh_token=refresh_token" \
     -H "Authorization: Bearer token" \
     -d '{"latitude":18, "longitude":30}'
   ```
@@ -286,6 +354,7 @@ make start
   ```sh
   curl -X PUT http://localhost:80/locations/{id} \
     -H "Content-Type: application/json" \ 
+    -H "Cookie: refresh_token=refresh_token" \
     -H "Authorization: Bearer token" \
     -d '{"latitude":18, "longitude":30}'
   ```
@@ -301,6 +370,7 @@ make start
   ```sh
   curl -X GET http://localhost:80/recommendations \
     -H "Content-Type: application/json" \ 
+    -H "Cookie: refresh_token=refresh_token" \
     -H "Authorization: Bearer token"
   ```
 - _Ответ от сервера:_
@@ -325,6 +395,7 @@ make start
   ```sh
   curl -X POST http://localhost:80/likes?liked_id=2 \
     -H "Content-Type: application/json" \ 
+    -H "Cookie: refresh_token=refresh_token" \
     -H "Authorization: Bearer token"
   ```
 - _Ответ от сервера:_
@@ -340,6 +411,7 @@ make start
   ```sh
   curl -X DELETE http://localhost:80/likes/2 \
     -H "Content-Type: application/json" \ 
+    -H "Cookie: refresh_token=refresh_token" \
     -H "Authorization: Bearer token"
   ```
 - _Ответ от сервера:_
@@ -350,6 +422,7 @@ make start
   ```sh
   curl -X GET http://localhost:80/likes/2 \
     -H "Content-Type: application/json" \ 
+    -H "Cookie: refresh_token=refresh_token" \
     -H "Authorization: Bearer token"
   ```
 - _Ответ от сервера:_
